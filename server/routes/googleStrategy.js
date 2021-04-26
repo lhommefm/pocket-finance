@@ -15,15 +15,13 @@ const googlePassport = new GoogleStrategy(googleConfig, function (request, acces
   
   // callback function: pull out returned information from Google
   const googleId = profile.id;
-  const firstName = profile.name.familyName;
-  const lastName = profile.name.givenName;
   const email = profile.emails[0].value;
 
-  console.log(chalk.green('Google Profile ==>', googleId, firstName, lastName, email));
+  console.log(chalk.green('Google Profile ==>', googleId, email));
 
   // if the email exists in the database, update the user with the Google ID if needed
   // if the email does not exist, create a new entry
-  partnerLogin(email, firstName, lastName, "google", googleId) 
+  partnerLogin(email, "google", googleId) 
     .then(function (user) {
       console.log(chalk.blue('GooglePassport user for done ==>', JSON.stringify(user)))
       done(null, user);

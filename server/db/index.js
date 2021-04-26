@@ -15,17 +15,17 @@ const db = new Pool({
 });
 
 // for a Facebook or Google login, look up their info via email and updated Partner Id if missing
-const partnerLogin = async (email, firstName, lastName, partner, partnerId) => {
+const partnerLogin = async (email, partner, partnerId) => {
   try{ 
     console.log(chalk.blue('partnerLogin triggered'));
     const res = await db.query(`
-      SELECT user_id, first_name, last_name, facebook, google 
+      SELECT user_id, facebook, google 
       FROM users 
       WHERE email = '${email}'
     `); 
     console.log(chalk.blue('partnerLogin ==> ', 'results', JSON.stringify(res.rows[0])));
     if (!res.rows[0]) {
-      const res2 = addPartnerUser(email, firstName, lastName, partner, partnerId);
+      const res2 = addPartnerUser(email, partner, partnerId);
       console.log(chalk.blue('partnerLogin ==> addPartnerUser triggered'));
       return(res2);
     }
@@ -48,7 +48,7 @@ const addPartnerIdToEmail = async (email, partner, partnerId) => {
       UPDATE users
       SET ${partner} = '${partnerId}'  
       WHERE email = '${email}'
-      RETURNING user_id, first_name, last_name
+      RETURNING user_id
     `);
     console.log(chalk.blue('addPartnerIdToEmail ==> rowCount', JSON.stringify(res.rows[0])));
     return(res.rows[0]);
@@ -58,12 +58,12 @@ const addPartnerIdToEmail = async (email, partner, partnerId) => {
 }
 
 // add a new Google or Facebook user to the database
-const addPartnerUser = async (email, firstName, lastName, partner, partnerId) => {
+const addPartnerUser = async (email, partner, partnerId) => {
   try {
     const res = await db.query(`
-      INSERT INTO users (email, first_name, last_name, ${partner}) 
-      VALUES ('${email}', '${firstName}', '${lastName}', '${partnerId}')
-      RETURNING user_id, first_name, last_name
+      INSERT INTO users (email, ${partner}) 
+      VALUES ('${email}', '${partnerId}')
+      RETURNING user_id
     `); 
     console.log(chalk.blue('addPartnerUser ==> ', JSON.stringify(res.rows[0])));
     return(res.rows[0]);
@@ -77,7 +77,7 @@ const deserializeUser = async (user_Id) => {
   console.log(chalk.blue('deserialize userId ==>',user_Id));
   try {
     const res = await db.query(`
-      SELECT user_id, first_name, last_name 
+      SELECT user_id 
       FROM users 
       WHERE user_id = '${user_Id}'
     `); 

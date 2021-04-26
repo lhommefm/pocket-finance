@@ -23,7 +23,7 @@ const facebookPassport = new FacebookStrategy(facebookConfig, function (accessTo
 
   // if the email exists in the database, update the user with the Facebook ID if needed
   // if the email does not exist, create a new entry
-  partnerLogin(email, firstName, lastName, "facebook", facebookId)
+  partnerLogin(email, "facebook", facebookId)
     .then(function (user) {
       console.log(chalk.blue('FacebookPassport user for done ==>', JSON.stringify(user)))  
       done(null, user);
