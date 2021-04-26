@@ -1,0 +1,114 @@
+/* General Styles */
+body {
+    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+/* Header */
+.header {
+    background-color: lightgray;
+    display: flex;
+    justify-content: space-between;
+    height:40px;
+    border-bottom: grey;
+    border-bottom-width: 1px;
+    border-bottom-style: solid
+}
+
+.link {
+    padding: 3px;
+    align-self: flex-end 
+}
+
+.buttonDiv {
+    display: flex;
+    flex-direction: row;    
+}
+
+.refreshButton {
+    align-self: center;
+    padding: 2px   
+}
+
+/* Budget Assets */
+table {
+    border-collapse: collapse;
+}
+
+td {
+    padding: 2px 7px 2px 7px;
+}
+
+thead {
+    text-decoration: underline;
+}
+
+thead .numbers {
+    text-align: center;
+}
+
+.total {
+    background-color: lightgrey;
+    font-weight: bold;
+}
+
+.total-savings {
+    background-color: lightgreen;
+    font-weight: bold;
+}
+
+.card {
+    margin: 5px;
+    border: 1px;
+    border-color: black;
+    border-style: solid;
+}
+
+.card-header {
+    margin-bottom: 5px;
+    background-color: darkblue;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    padding: 5px 0 5px 0
+}
+
+.numbers {
+    text-align: right;
+}
+
+.table-label {
+    padding-right:40px
+}
+
+/* Charts */
+.chartTitle {
+    padding-bottom: 5px;
+}
+
+.chartTitle p {
+    margin: 1px;
+    font-weight: bold;
+    font-size: 90%;
+}
+
+.chartTitle span {
+    margin: 1px;
+}
+
+.chart {
+    width: 390px;
+    min-height: 250px;
+    padding-bottom: 10px;
+}
+
+.select {
+    flex-basis: 100%
+}
