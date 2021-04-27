@@ -11,7 +11,7 @@ export class Macro extends React.Component {
     this.state = { 
       year: 2014,
       consumerSpending: [1],
-      consumerWealth: [22,24,25],
+      consumerWealth: [22,24,25,26],
       governmentFinancials: [17,18,19,21],
       macroeconomic: [5,6,7,8],
       labor: [9,10],
@@ -83,13 +83,13 @@ export class Macro extends React.Component {
           </div>
 
           <div className="card">
-            <div className="card-header">Prices</div>
-            {this.state.prices.map( (chart_group, index) => {
+            <div className="card-header">Consumer Wealth</div>
+            {this.state.consumerWealth.map( (chart_group, index) => {
               return (
                 <ChartCard chart_group={this.props.macro[chart_group]} key={index} />
               )
             })}
-          </div>
+          </div>    
 
           <div className="card">
             <div className="card-header">Consumer Spending</div>
@@ -101,14 +101,13 @@ export class Macro extends React.Component {
           </div>
 
           <div className="card">
-            <div className="card-header">Consumer Wealth</div>
-            {this.state.consumerWealth.map( (chart_group, index) => {
+            <div className="card-header">Prices</div>
+            {this.state.prices.map( (chart_group, index) => {
               return (
                 <ChartCard chart_group={this.props.macro[chart_group]} key={index} />
               )
             })}
-          </div>  
-         
+          </div>
            
           <div className="card">
             <div className="card-header">Stocks</div>

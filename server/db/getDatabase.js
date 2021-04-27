@@ -56,7 +56,7 @@ const getAssetAllocation = async (user_id) => {
 const getStockAssets = async (user_id) => {
   try {
     const res = await db.query(`
-      SELECT account_type, ticker, quantity, price, value
+      SELECT id, account_type, ticker, quantity, price, value
       FROM stock_value_table
       WHERE user_id = '${user_id}'
     `); 

@@ -6,6 +6,7 @@ const {
 const { refreshStocks } = require('../db/refreshStocks')
 const { refreshFred } = require('../db/refreshFred')
 const { refreshQuandl } = require('../db/refreshQuandl')
+const { updateStocks } = require('../db/updateDatabase')
 
 // all routes automatically start with /api to be routed here
 
@@ -55,9 +56,16 @@ router.get('/getStockHistory', async function (req, res, next) {
     const result = await getStockHistory();
     res.send(result);
 });
+
 // get the macro economic numbers from the database
 router.get('/getMacroData/year/:year', async function (req, res, next) {
     const result = await getMacroData(req.params.year);
+    res.send(result);
+});
+
+// update the stock account, ticker and quantity from the database
+router.post('/updateStock', async function (req, res, next) {
+    const result = await updateStocks(req.body, req.user.id);
     res.send(result);
 });
 

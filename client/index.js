@@ -14,6 +14,7 @@ import Header from './components/Header';
 import BudgetAssets from './components/BudgetAssets';
 import Stocks from './components/Stocks';
 import Macro from './components/Macro';
+import Inputs from './components/Inputs';
 
 
 // Provider is needed to wrap the rest of the application and give access to Redux Store
@@ -25,6 +26,7 @@ ReactDOM.render(
       <Route path='/macro' component={Macro} />
       <Route path='/budgetAssets' component={BudgetAssets} />
       <Route path='/stocks' component={Stocks} />
+      <Route path='/inputs' component={Inputs} />
     </Router>
   </Provider>,
   document.getElementById('app')

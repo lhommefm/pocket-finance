@@ -15,10 +15,11 @@ export default class Header extends React.Component {
     <div className='header'>
       
       <div className="link">
-        <Link className="link" to="/stocks">Stocks</Link>
-        <Link className="link" to="/macro">Macro</Link>
         <Link className="link" to="/login">Login</Link>
         <Link className="link" to="/budgetAssets">Budgets Assets</Link>
+        <Link className="link" to="/stocks">Stocks</Link>
+        <Link className="link" to="/macro">Macro</Link>
+        <Link className="link" to="/inputs">Inputs</Link>
       </div>
       
       <div className="buttonDiv">
