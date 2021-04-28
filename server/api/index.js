@@ -3,10 +3,11 @@ const {
     getBudget, getAssets, getStockAssets, getTaxData, 
     getAssetAllocation, getMacroData, getStockHistory 
 } = require('../db/getDatabase')
+const { getBudgetAssumptions, getAssetsAssumptions, getTaxAssumptions } = require('../db/getAssumptions')
 const { refreshStocks } = require('../db/refreshStocks')
 const { refreshFred } = require('../db/refreshFred')
 const { refreshQuandl } = require('../db/refreshQuandl')
-const { updateStocks } = require('../db/updateDatabase')
+const { updateStocks, updateBudget } = require('../db/updateDatabase')
 
 // all routes automatically start with /api to be routed here
 
@@ -63,9 +64,25 @@ router.get('/getMacroData/year/:year', async function (req, res, next) {
     res.send(result);
 });
 
+// pull all inputs
+router.get('/getInputs', async function (req, res, next) {
+    const result = await Promise.all([
+        getBudgetAssumptions(req.user.user_id), 
+        getAssetsAssumptions(req.user.user_id), 
+        getTaxAssumptions(req.user.user_id)
+    ]);
+    res.send(result);
+});
+
 // update the stock account, ticker and quantity from the database
 router.post('/updateStock', async function (req, res, next) {
-    const result = await updateStocks(req.body, req.user.id);
+    const result = await updateStocks(req.body, req.user.user_id);
+    res.send(result);
+});
+
+// update the budget account, ticker and quantity from the database
+router.post('/updateBudget', async function (req, res, next) {
+    const result = await updateBudget(req.body, req.user.user_id);
     res.send(result);
 });
 

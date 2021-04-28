@@ -6,6 +6,7 @@ import { assetAllocationReducer } from './getAssetAllocation';
 import { taxesReducer } from './getTaxes';
 import { macroReducer } from './getMacro';
 import { stocksReducer } from './getStocks';
+import { inputsReducer } from './getInputSettings';
 
 const primaryReducer = combineReducers({
   budget: budgetReducer,
@@ -14,7 +15,8 @@ const primaryReducer = combineReducers({
   assetTable: assetAllocationReducer,
   taxes: taxesReducer,
   macro: macroReducer,
-  stocks: stocksReducer
+  stocks: stocksReducer,
+  inputs: inputsReducer
 })
 
 export default primaryReducer
