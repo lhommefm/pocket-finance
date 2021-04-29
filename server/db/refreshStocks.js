@@ -60,7 +60,7 @@ const getStockData = async function (stocks) {
 
   }
   stockDataString = stockDataString.slice(0,stockDataString.length-1)
-  console.log(chalk.yellow('data string ==>', stockDataString))  
+  // console.log(chalk.yellow('data string ==>', stockDataString))  
   return stockDataString
 }
 

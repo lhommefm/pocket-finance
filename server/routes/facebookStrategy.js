@@ -14,18 +14,18 @@ const facebookConfig = {
 // configure the strategy with our config object
 const facebookPassport = new FacebookStrategy(facebookConfig, function (accessToken, refreshToken, profile, done) {
  
-  console.log(chalk.green('Facebook Profile returned ==>', JSON.stringify(profile)));  
+  // console.log(chalk.green('Facebook Profile returned ==>', JSON.stringify(profile)));  
   // callback function: pull out returned information from Facebook
   const facebookId = profile.id;
   const email = profile.emails[0].value;
 
-  console.log(chalk.green('Facebook Profile ==>', facebookId, email));
+  // console.log(chalk.green('Facebook Profile ==>', facebookId, email));
 
   // if the email exists in the database, update the user with the Facebook ID if needed
   // if the email does not exist, create a new entry
   partnerLogin(email, "facebook", facebookId)
     .then(function (user) {
-      console.log(chalk.blue('FacebookPassport user for done ==>', JSON.stringify(user)))  
+      // console.log(chalk.blue('FacebookPassport user for done ==>', JSON.stringify(user)))  
       done(null, user);
     })
     .catch(done);

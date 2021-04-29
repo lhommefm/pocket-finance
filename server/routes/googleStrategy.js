@@ -17,13 +17,13 @@ const googlePassport = new GoogleStrategy(googleConfig, function (request, acces
   const googleId = profile.id;
   const email = profile.emails[0].value;
 
-  console.log(chalk.green('Google Profile ==>', googleId, email));
+  // console.log(chalk.green('Google Profile ==>', googleId, email));
 
   // if the email exists in the database, update the user with the Google ID if needed
   // if the email does not exist, create a new entry
   partnerLogin(email, "google", googleId) 
     .then(function (user) {
-      console.log(chalk.blue('GooglePassport user for done ==>', JSON.stringify(user)))
+      // console.log(chalk.blue('GooglePassport user for done ==>', JSON.stringify(user)))
       done(null, user);
     })
     .catch(done);

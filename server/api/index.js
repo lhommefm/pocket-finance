@@ -7,9 +7,11 @@ const { getBudgetAssumptions, getAssetsAssumptions, getTaxAssumptions } = requir
 const { refreshStocks } = require('../db/refreshStocks')
 const { refreshFred } = require('../db/refreshFred')
 const { refreshQuandl } = require('../db/refreshQuandl')
-const { updateStocks, updateBudget } = require('../db/updateDatabase')
 
 // all routes automatically start with /api to be routed here
+
+// direct /update calls to the updateDB files
+router.use('/update', require('./updateDB'))
 
 // refresh stock price history in the database for relevant stocks
 router.get('/refreshStockData', async function (req, res, next) {
@@ -71,18 +73,6 @@ router.get('/getInputs', async function (req, res, next) {
         getAssetsAssumptions(req.user.user_id), 
         getTaxAssumptions(req.user.user_id)
     ]);
-    res.send(result);
-});
-
-// update the stock account, ticker and quantity from the database
-router.post('/updateStock', async function (req, res, next) {
-    const result = await updateStocks(req.body, req.user.user_id);
-    res.send(result);
-});
-
-// update the budget account, ticker and quantity from the database
-router.post('/updateBudget', async function (req, res, next) {
-    const result = await updateBudget(req.body, req.user.user_id);
     res.send(result);
 });
 

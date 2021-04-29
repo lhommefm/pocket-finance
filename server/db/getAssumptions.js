@@ -8,6 +8,7 @@ const getBudgetAssumptions = async (user_id) => {
         SELECT id, activity, budget, item_type, ticker
         FROM budget_assumptions 
         WHERE user_id = '${user_id}'
+        ORDER BY item_type, budget DESC, activity
       `); 
     //   console.log(chalk.blue('getBudgetAssumptions ==> ', JSON.stringify(res.rows)));  
       return(res.rows)
@@ -21,9 +22,10 @@ const getBudgetAssumptions = async (user_id) => {
 const getAssetsAssumptions = async (user_id) => {
     try {
       const res = await db.query(`
-        SELECT asset_type, account_type, value, interest_rate 
+        SELECT id, asset_type, account_type, value, interest_rate 
         FROM cash_loan_assets
         WHERE user_id = '${user_id}'
+        ORDER BY asset_type, value DESC
       `); 
     //   console.log(chalk.blue('getAssetsAssumptions ==> ', JSON.stringify(res.rows)));  
       return(res.rows)

@@ -1,7 +1,7 @@
 const chalk = require('chalk');
 const { db } = require('./index')
 
-// get stock information
+// update stock information
 const updateStocks = async (data, user_id) => {
   // console.log('number of changed rows ==>',data.length)
   for (let i = 0; i<data.length; i++) {
@@ -14,14 +14,16 @@ const updateStocks = async (data, user_id) => {
           quantity = '${data[i].quantity.slice(0,8)}'
         WHERE id = '${data[i].id}' AND user_id = '${user_id}' 
       `); 
+      return('Success');
     } catch (error) {
       console.log(chalk.red('updateStocks id, error ==>', data[i].id, error));
+      return(data[i].id, error);
     }
   }
  
 }
 
-// get budget information
+// update budget information
 const updateBudget = async (data, user_id) => {
   // console.log('number of changed rows ==>',data.length)
   for (let i = 0; i<data.length; i++) {
@@ -36,11 +38,54 @@ const updateBudget = async (data, user_id) => {
           ticker = ${!data[i].ticker ? null : `'${data[i].ticker}'`}
         WHERE id = '${data[i].id}' AND user_id = '${user_id}' 
       `); 
+      return('Success');
     } catch (error) {
       console.log(chalk.red('updateBudget id, error ==>', data[i].id, error));
+      return(data[i].id, error);
     }
   }
- 
 }
 
-module.exports = { updateStocks, updateBudget }
+// update asset information
+const updateAssets = async (data, user_id) => {
+  // console.log('number of changed rows ==>',data.length)
+  for (let i = 0; i<data.length; i++) {
+    try {
+      const res = await db.query(`
+        UPDATE cash_loan_assets
+        SET 
+          asset_type = '${data[i].asset_type}', 
+          account_type = '${data[i].account_type}', 
+          value = '${data[i].value}',
+          interest_rate = '${data[i].interest_rate}'
+        WHERE id = '${data[i].id}' AND user_id = '${user_id}' 
+      `); 
+      return('Success');
+    } catch (error) {
+      console.log(chalk.red('updateAsset id, error ==>', data[i].id, error));
+      return(data[i].id, error);
+    }
+  }
+}
+
+// update tax information
+const updateTaxSettings = async (data, user_id) => {
+  // console.log('number of changed rows ==>',data.length)
+  for (let i = 0; i<data.length; i++) {
+    try {
+      const res = await db.query(`
+        UPDATE tax_settings
+        SET 
+          filing_status = '${data[i].filing_status}', 
+          state = '${data[i].state}'
+        WHERE user_id = '${user_id}' 
+      `); 
+      return('Success');
+    } catch (error) {
+      console.log(chalk.red('updateTaxSettings id, error ==>', data[i].id, error));
+      return(data[i].id, error);
+    }
+  }
+}
+
+module.exports = { updateStocks, updateBudget, updateAssets, updateTaxSettings }
