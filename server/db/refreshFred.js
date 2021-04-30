@@ -29,7 +29,7 @@ const fetchFredData = async function (fredSeriesList) {
   let dataString = "";
   let tickerString = "(";
   for (let i = 0; i < fredSeriesList.length; i++) {
-    const url = `https://api.stlouisfed.org/fred/series/observations?series_id=${fredSeriesList[i].series_id}&api_key=${process.env.FRED_API_KEY}&observation_start=2000-01-01&frequency=${fredSeriesList[i].frequency}&file_type=json`;
+    const url = `https://api.stlouisfed.org/fred/series/observations?series_id=${fredSeriesList[i].series_id}&api_key=${process.env.FRED_API_KEY}&observation_start=2015-01-01&frequency=${fredSeriesList[i].frequency}&file_type=json`;
     // console.log(chalk.yellow('URL ==>',url))
     const { data: {observations} } = await axios.get(url);
     if (observations) {tickerString += `'${fredSeriesList[i].series_id}',`}

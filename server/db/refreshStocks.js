@@ -45,7 +45,7 @@ const getStockData = async function (stocks) {
   // pull data from the API: loop through each set of 3 tickers, and loop through each row of the response to format for SQL
   let stockDataString = ""
   for (let i = 0; i < stockStringArray.length; i++) {
-    const URL = `http://api.marketstack.com/v1/eod?access_key=${process.env.MARKETSTACK_API_KEY}&symbols=${stockStringArray[i]}&limit=1000`
+    const URL = `http://api.marketstack.com/v1/eod?access_key=${process.env.MARKETSTACK_API_KEY}&symbols=${stockStringArray[i]}&limit=1000&date_from=2021-01-01`
     // console.log(chalk.yellow('URL for Marketstack API ==> ', URL))
 
     try {

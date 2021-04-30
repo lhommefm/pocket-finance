@@ -3,13 +3,13 @@ import { connect } from "react-redux";
 import { getMacroData } from "../store/getMacro";
 import { ChartCard } from './MacroCharts';
 
-const dropdownYears = [2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020]
+const dropdownYears = [2015,2016,2017,2018,2019,2020]
 
 export class Macro extends React.Component {
   constructor (props) {
     super(props);
     this.state = { 
-      year: 2014,
+      year: 2015,
       consumerSpending: [1],
       consumerWealth: [22,24,25,26],
       governmentFinancials: [17,18,19,21],

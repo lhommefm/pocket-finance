@@ -28,7 +28,7 @@ const getQuandlSeries = async () => {
 const fetchQuandlData = async function (quandlSeriesList) {
   let dataString = "";
   for (let i = 0; i < quandlSeriesList.length; i++) {
-    const url = `https://www.quandl.com/api/v3/datasets/${quandlSeriesList[i].series_id}/data.json?&api_key=${process.env.QUANDL_API_KEY}&collapse=monthly`;
+    const url = `https://www.quandl.com/api/v3/datasets/${quandlSeriesList[i].series_id}/data.json?&api_key=${process.env.QUANDL_API_KEY}&collapse=monthly&start_date=2015-01-01`;
     // console.log(chalk.yellow('URL ==>',url))
     const response = await axios.get(url);
     const data = response.data.dataset_data.data
