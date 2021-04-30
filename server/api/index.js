@@ -7,6 +7,7 @@ const { getBudgetAssumptions, getAssetsAssumptions, getTaxAssumptions } = requir
 const { refreshStocks } = require('../db/refreshStocks')
 const { refreshFred } = require('../db/refreshFred')
 const { refreshQuandl } = require('../db/refreshQuandl')
+const chalk = require('chalk')
 
 // all routes automatically start with /api to be routed here
 
@@ -22,7 +23,7 @@ router.get('/refreshStockData', async function (req, res, next) {
 
 // get the latest Fred & Quandl economic numbers from the API
 router.get('/refreshMacroData', async function (req, res, next) {
-    const result = Promise.all([refreshFred(),refreshQuandl()])
+    const result = await Promise.all([refreshFred(),refreshQuandl()])
     // console.log(chalk.yellow('refreshMacro Fred result ==>', JSON.stringify(result[0]),'Quandl result ==>', JSON.stringify(result[1]),));
     res.send(result);
 });

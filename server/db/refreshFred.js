@@ -56,7 +56,7 @@ const addFredDatabase = async (dataString, tickerString) => {
         VALUES ${dataString}
         ON CONFLICT (series_id, date) DO NOTHING
       `); 
-      console.log(chalk.blue('addFredDatabase ==> ', JSON.stringify(res)));
+      // console.log(chalk.blue('addFredDatabase ==> ', JSON.stringify(res)));
       return(res);
     } catch (error) {
       console.log(chalk.red('addFredDatabase error ==>', error));

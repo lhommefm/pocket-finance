@@ -7,6 +7,7 @@ const refreshStocks = async (user_id) => {
     const stockList = await getTicker(user_id);
     const stockData = await getStockData(stockList);
     const result = addStockDataDatabase(stockData);
+    return result.rowCount
 }
 
 // get unique ticker list from the database
@@ -72,7 +73,7 @@ const addStockDataDatabase = async (stockDataString) => {
     VALUES ${stockDataString}
     ON CONFLICT (ticker, date) DO NOTHING
     `); 
-    console.log(chalk.blue('addStockDataDatabase ==> ', JSON.stringify(res)));
+    // console.log(chalk.blue('addStockDataDatabase ==> ', JSON.stringify(res)));
     return(res);
   } catch (error) {
     console.log(chalk.red('addStockDataDatabase error ==>', error));

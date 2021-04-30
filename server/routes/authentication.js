@@ -9,6 +9,7 @@ const chalk = require('chalk');
 
 // logout route, begins with /authentication
 router.delete('/logout', (req, res, next) => {
+  console.log('logout triggered')
   req.logout();
   req.session.destroy()
   res.sendStatus(204);
@@ -18,8 +19,8 @@ router.delete('/logout', (req, res, next) => {
 // Passport attaches the session user to the request object
 // begins with /authentication
 router.get('/me', (req, res, next) => {
-  console.log(chalk.blue('req.user ==>',JSON.stringify(req.user)));
-  res.json(req.user);
+  // console.log(chalk.blue('req.user ==>',JSON.stringify(req.user)));
+  res.json(!!req.user);
 });
 
 // login with Google, begins with /authentication

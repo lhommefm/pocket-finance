@@ -1,15 +1,14 @@
 import React from 'react';
-import { GoogleLogin , FacebookLogin } from './OathLogins';
 
-const Login = () => {
-
+export const Login = () => {
   return (
     <div>
-      <GoogleLogin />
-      <FacebookLogin />
+      <form  method='get' action='/authentication/google'>
+        <button type='submit'>Login with Google</button>
+      </form>
+      <form method='get' action='/authentication/facebook'>
+        <button type='submit'>Login with Facebook</button>
+      </form>
     </div> 
-  );
-
-};
-
-export default Login;
+  )
+}

@@ -9,7 +9,7 @@ import store from './store';
 import '../public/index.css'
 
 // import components
-import Login from './components/Login';
+import { Login } from './components/Login';
 import Header from './components/Header';
 import BudgetAssets from './components/BudgetAssets';
 import Stocks from './components/Stocks';
