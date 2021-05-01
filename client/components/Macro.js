@@ -10,6 +10,7 @@ export class Macro extends React.Component {
     super(props);
     this.state = { 
       year: 2015,
+      messages: [],
       consumerSpending: [1],
       consumerWealth: [22,24,25,26],
       governmentFinancials: [17,18,19,21],
@@ -20,10 +21,30 @@ export class Macro extends React.Component {
       stocks: [2,3,28]
     };
     this.setYear = this.setYear.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
     this.props.getMacro(this.state.year);
+  }
+
+  async handleSubmit(event) {
+    event.preventDefault()
+    const response = await Axios.get(event.target[0].value)
+    if(event.target[0].value === "/api/refreshMacroData") {
+      this.setState({
+      messages: [
+        ...this.state.messages,
+        `Updated ${response.data[0]} Fred entries`,
+        `Updated ${response.data[1]} Quandl entries`
+      ]
+    });
+    }; 
+    setTimeout( () => {
+      this.setState({
+        messages: []
+      });
+    }, 5000);
   }
 
   setYear (event) {
@@ -44,6 +65,12 @@ export class Macro extends React.Component {
                 <option key={year} value={year}>{year}</option>
               )})}
             </select>  
+            <form onSubmit={this.handleSubmit} className='refreshButton'>
+              <button type='submit' value="/api/refreshMacroData">Refresh Macro Data</button>
+            </form>
+            {this.state.messages.map( (message, index) => { return (
+              <p key={index}>{message}</p>
+            )})}  
           </div>
 
           <div className="card">

@@ -9,9 +9,11 @@ export class Stocks extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedStock: 'FB'
+      selectedStock: 'FB',
+      messages: []
     };
-    this.setStock = this.setStock.bind(this)
+    this.setStock = this.setStock.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   componentDidMount() {
     this.props.stockAssets();
@@ -19,6 +21,22 @@ export class Stocks extends React.Component {
     this.props.stockHistory();
   }
   
+  async handleSubmit(event) {
+    event.preventDefault();
+    const response = await Axios.get(event.target[0].value);
+    this.setState({
+      messages: [
+        ...this.state.messages,
+        `Updated ${response.data[0]} Stock entries`,
+      ]
+    });
+    setTimeout( () => {
+      this.setState({
+        messages: []
+      });
+    }, 5000);
+  }
+
   setStock (event) {
     this.setState( {selectedStock: event.target.value} );
   }
@@ -27,6 +45,12 @@ export class Stocks extends React.Component {
     if (typeof(this.props.stocks.FB)==="undefined") {return ("Data Loading")}
     else {return (
      <div className="flex">
+        {this.state.messages.map( (message, index) => { return (
+          <p key={index}>{message}</p>
+        )})}
+        <form onSubmit={this.handleSubmit} className='refreshButton'>
+          <button type='submit' value="/api/refreshStockData">Refresh Stock Data</button>
+        </form> 
 
 {/* Overall Asset Table */}
       <div className="card">

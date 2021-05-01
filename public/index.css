@@ -12,19 +12,62 @@ body {
 }
 
 /* Header */
-.header {
-    background-color: lightgray;
-    display: flex;
-    justify-content: space-between;
-    height:40px;
-    border-bottom: grey;
-    border-bottom-width: 1px;
-    border-bottom-style: solid
+.tabs {
+    position: relative;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    font-weight: 300;
+    font-size: 1em;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #e7ecea;
+    color: #74777b;
+    display: block;
+    text-align: center;
 }
 
-.link {
-    padding: 3px;
-    align-self: flex-end 
+.tabs ul {
+    list-style: none;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 100%
+}
+
+.tabs li {
+    margin: 0;
+    padding: 5px;
+    text-align: center;
+    flex: 1;
+    border: 1px solid lightgrey
+}
+
+.tabs a {
+    text-decoration: none;
+    outline: none;
+    color: grey
+}
+.tabs .tab-current {
+    list-style-position: inside;
+    border-top-color: blue;
+    border-top-width: 5px;
+    border-bottom: none;
+    background-color: white;
+}
+
+.tabs .tab-current a {
+    color: black
+}
+
+.tabs img {
+    width: 1.5em;
+    height: 1.5em;
 }
 
 .buttonDiv {

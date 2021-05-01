@@ -91,7 +91,7 @@ export class BudgetAssets extends React.Component {
         <table>
           <thead>
               <tr>
-                  <td className="table-label">Expense Item</td>
+                  <td className="table-label">Expense</td>
                   <td className="numbers">Budget</td>
               </tr>
           </thead>
@@ -179,8 +179,8 @@ export class BudgetAssets extends React.Component {
         <table>
           <thead>
               <tr>
-                  <td>Asset Type</td>
-                  <td className="table-label">Account Type</td>
+                  <td>Type</td>
+                  <td className="table-label">Account</td>
                   <td className="numbers">Value</td>
               </tr>
           </thead>
