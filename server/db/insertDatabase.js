@@ -7,7 +7,7 @@ const insertStock = async (data, user_id) => {
     try {
       const res = await db.query(`
         INSERT INTO stock_assets (user_id, account_type, ticker, asset_class, quantity)
-        VALUES (${user_id}, '${data.account_type}', '${data.ticker}', '${data.quantity}')  
+        VALUES (${user_id}, '${data.account_type}', '${data.ticker}', '${data.asset_class}', '${data.quantity}')  
       `); 
       return('Success');
     } catch (error) {

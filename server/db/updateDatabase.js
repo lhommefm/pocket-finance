@@ -88,4 +88,20 @@ const updateTaxSettings = async (data, user_id) => {
   }
 }
 
-module.exports = { updateStocks, updateBudget, updateAssets, updateTaxSettings }
+
+// delete an entry
+const deleteEntry = async (id, user_id, table) => {
+  // console.log('number of changed rows ==>',data.length)
+  try {
+    const res = await db.query(`
+      DELETE FROM ${table}
+      WHERE user_id = '${user_id}' AND id = '${id}' 
+    `); 
+    return('Success');
+  } catch (error) {
+    console.log(chalk.red('delete id, error ==>', id, error));
+    return(id, error);
+  }
+}
+
+module.exports = { updateStocks, updateBudget, updateAssets, updateTaxSettings, deleteEntry }

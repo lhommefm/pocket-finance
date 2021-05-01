@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { updateStocks, updateBudget, updateAssets, updateTaxSettings } = require('../db/updateDatabase');
+const { updateStocks, updateBudget, updateAssets, updateTaxSettings, deleteEntry } = require('../db/updateDatabase');
 const { insertStock, insertBudget, insertAssets } = require('../db/insertDatabase');
 
 // all routes automatically start with /api/update to be routed here
@@ -43,6 +43,12 @@ router.post('/insertBudget', async function (req, res, next) {
 // add assets line item to the database
 router.post('/insertAssets', async function (req, res, next) {
     const result = await insertAssets(req.body, req.user.user_id);
+    res.send(result);
+});
+
+// deletes line item from the database
+router.delete('/delete', async function (req, res, next) {
+    const result = await deleteEntry(req.body.id, req.user.user_id, req.body.db);
     res.send(result);
 });
 

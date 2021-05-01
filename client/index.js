@@ -22,7 +22,7 @@ ReactDOM.render(
   <Provider store={store}>
     <Router>
       <Route path='/' component={Header} />
-      <Route path='/login' component={Login} />  
+      <Route path='/' component={Login} />  
       <Route path='/macro' component={Macro} />
       <Route path='/budgetAssets' component={BudgetAssets} />
       <Route path='/stocks' component={Stocks} />

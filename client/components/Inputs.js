@@ -12,12 +12,13 @@ export class Inputs extends React.Component {
       budgetToUpdate: [],
       assetsToUpdate: [],
       taxSettingsToUpdate: [],
-      newStock: [{account_type: "Individual", asset_class: "", value: 0, percent: 0}],
+      newStock: [{account_type: "Individual", ticker: "", asset_class: "Domestic Stocks", quantity: 0}],
       newAsset: [{asset_type: "Cash", account_type: "", value: 0, interest_rate: 0}],
-      newBudget: [{activity: "", budget: 0, item_type: "Expense", ticker: ""}]
+      newBudget: [{activity: "", budget: 0, item_type: "expense", ticker: ""}]
     };
     this.updateState = this.updateState.bind(this);
-    this.updateDatabase = this.updateDatabase.bind(this)
+    this.updateDatabase = this.updateDatabase.bind(this);
+    this.deleteItem = this.deleteItem.bind(this)
   }
   
   async componentDidMount() {
@@ -39,7 +40,7 @@ export class Inputs extends React.Component {
     this.setState({[stateName]: stateCopy})
   }
 
-  updateDatabase (initial, updated, api) {
+  async updateDatabase (initial, updated, api, type) {
     let changedArray = []
     for (let i = 0; i < updated.length; i++) {
       // console.log(JSON.stringify(initial[i]) === JSON.stringify(updated[i]))
@@ -47,33 +48,64 @@ export class Inputs extends React.Component {
         changedArray.push(updated[i])
       }
     }
-    axios.post(api, changedArray);
+    await axios.post(api, changedArray);
+    this.refreshInputs(type)  
   }
 
-  async insertDatabase (newEntry, api, type) {
+  async deleteItem (id, db, event, type) {
+    event.preventDefault();
+    await axios.delete('/api/update/delete', {data: {id, db}});
+    this.refreshInputs(type)
+  }
+
+  async insertDatabase (newEntry, api, key, type) {
     await axios.post(api, newEntry);
-    await this.props.getInputs();
     const defaults = {
-      'newStock': [{account_type: "Individual", asset_class: "", value: 0, percent: 0}],
+      'newStock': [{account_type: "Individual", ticker: "", asset_class: "Domestic Stocks",  quantity: 0}],
       'newAsset': [{asset_type: "Cash", account_type: "", value: 0, interest_rate: 0}],
       'newBudget': [{activity: "", budget: 0, item_type: "Expense", ticker: ""}]
     };
-    if (type = 'newStock') {
+    if (key === 'newStock') {
+      this.setState({
+        [key]: defaults[key]
+      });
+    }
+    if (key === 'newAsset') {
+      this.setState({
+        [key]: defaults[key]
+      });
+    }
+    if (key === 'newBudget') {
+      this.setState({
+        [key]: defaults[key]
+      });
+    }
+    await this.props.getInputs();
+    this.refreshInputs(type)  
+  }
+
+  async refreshInputs (type) {
+    if (type === 'stock') {
+      await this.props.stockAssets();
       this.setState({
         stockListToUpdate: JSON.parse(JSON.stringify([...this.props.stockTable])),
-        [type]: defaults[type]
       });
+    } else {
+      await this.props.getInputs();
     }
-    if (type = 'newAsset') {
+    if (type === 'asset') {
       this.setState({
         assetsToUpdate: JSON.parse(JSON.stringify([...this.props.inputs[1]])),
-        [type]: defaults[type]
       });
-    }
-    if (type = 'newBudget') {
+    };
+    if (type === 'budget') {
       this.setState({
         budgetToUpdate: JSON.parse(JSON.stringify([...this.props.inputs[0]])),
-        [type]: defaults[type]
+      });
+    };
+    if (type === 'tax') {
+      this.setState({
+        taxSettingsToUpdate: JSON.parse(JSON.stringify([...this.props.inputs[2]])),
       });
     }
   }
@@ -102,12 +134,14 @@ export class Inputs extends React.Component {
                   <option value="REIT Stocks">REIT Stocks</option>
                 </select>
                 <input index={index} type="text" name="quantity" value={stockEntry.quantity} onChange={(event) => this.updateState(event, 'stockListToUpdate')} />
+                <input type="submit" value="X" onClick={(event) => this.deleteItem(stockEntry.id, 'stock_assets', event, 'stock')} />
               </form> 
             )})}
             <input type="submit" value="Update Stock Ownership" onClick={() => this.updateDatabase(
               this.props.stockTable,
               this.state.stockListToUpdate,
-              '/api/update/updateStock'
+              '/api/update/updateStock',
+              'stock'
             )} />
             <form>
               <select index="0" name="account_type" value={this.state.newStock[0].account_type} onChange={(event) => this.updateState(event, 'newStock')}>
@@ -129,7 +163,8 @@ export class Inputs extends React.Component {
             <input type="submit" value="Add New Stock" onClick={() => this.insertDatabase(
             this.state.newStock[0],
             '/api/update/insertStock',
-            'newStock'
+            'newStock',
+            'stock'
             )} /> 
       </div>
 
@@ -148,16 +183,18 @@ export class Inputs extends React.Component {
                   <option value="other">Other</option>
                 </select>
                 <input index={index} type="text" name="ticker" value={budgetEntry.ticker || ''} onChange={(event) => this.updateState(event, 'budgetToUpdate')} />
+                <input type="submit" value="X" onClick={(event) => this.deleteItem(budgetEntry.id, 'budget_assumptions', event, 'budget')} />
               </form> 
             )})}
              <input type="submit" value="Update Budget Item"  onClick={() => this.updateDatabase(
               this.props.inputs[0],
               this.state.budgetToUpdate,
-              '/api/update/updateBudget'
+              '/api/update/updateBudget',
+              'budget'
             )} />
             <form>
               <input index="0" type="text" name="activity" value={this.state.newBudget[0].activity} onChange={(event) => this.updateState(event, 'newBudget')} />
-              <input index="0" type="text" name="value" value={this.state.newBudget[0].value} onChange={(event) => this.updateState(event, 'newBudget')} />
+              <input index="0" type="text" name="budget" value={this.state.newBudget[0].budget} onChange={(event) => this.updateState(event, 'newBudget')} />
               <select index="0" name="item_type" value={this.state.newBudget[0].item_type} onChange={(event) => this.updateState(event, 'newBudget')}>
                   <option value="expense">Expense</option>
                   <option value="income stock">Income: stocks</option>
@@ -170,7 +207,8 @@ export class Inputs extends React.Component {
             <input type="submit" value="Add New Budget Item" onClick={() => this.insertDatabase(
             this.state.newBudget[0],
             '/api/update/insertBudget',
-            'newBudget'
+            'newBudget',
+            'budget'
             )} /> 
       </div>
 
@@ -186,12 +224,14 @@ export class Inputs extends React.Component {
                 <input index={index} type="text" name="account_type" value={assetEntry.account_type} onChange={(event) => this.updateState(event, 'assetsToUpdate')} />
                 <input index={index} type="text" name="value" value={assetEntry.value || 0} onChange={(event) => this.updateState(event, 'assetsToUpdate')} />
                 <input index={index} type="text" name="interest_rate" value={assetEntry.interest_rate || 0} onChange={(event) => this.updateState(event, 'assetsToUpdate')} />
+                <input type="submit" value="X" onClick={(event) => this.deleteItem(assetEntry.id, 'cash_loan_assets', event, 'asset')} />
               </form> 
             )})}
              <input type="submit" value="Update Asset Info" onClick={() => this.updateDatabase(
               this.props.inputs[1],
               this.state.assetsToUpdate,
-              '/api/update/updateAssets'
+              '/api/update/updateAssets',
+              'asset'
             )} />
             <form>
               <select index="0" name="asset_type" value={this.state.newAsset[0].asset_type} onChange={(event) => this.updateState(event, 'newAsset')}>
@@ -205,7 +245,8 @@ export class Inputs extends React.Component {
             <input type="submit" value="Add New Line Item" onClick={() => this.insertDatabase(
             this.state.newAsset[0],
             '/api/update/insertAssets',
-            'newAsset'
+            'newAsset',
+            'asset'
               )} /> 
       </div>
 
@@ -226,7 +267,8 @@ export class Inputs extends React.Component {
         <input type="submit" onClick={() => this.updateDatabase(
           this.props.inputs[2],
           this.state.taxSettingsToUpdate,
-          '/api/update/updateTaxSettings'
+          '/api/update/updateTaxSettings',
+          'tax'
         )} />
       </div>
 
