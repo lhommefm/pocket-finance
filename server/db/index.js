@@ -5,15 +5,22 @@ types.setTypeParser(1700, function(val) {
   return Number(val)
 })
 
-const db = new Pool({
-  uri: process.env.DATABASE_URL,
-  // user: process.env.DATABASE_USER,
-  // password: '',
-  host: process.env.DATABASE_HOST,
-  database: process.env.DATABASE_DATABASE,
-  port: process.env.DATABASE_PORT,
-});
-
+let db;
+if (process.env.NODE_ENV === 'development') {
+  db = new Pool({
+    host: process.env.DATABASE_HOST,
+    database: process.env.DATABASE_DATABASE,
+    port: process.env.DATABASE_PORT,
+  });
+} else {
+  db = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+      rejectUnauthorized: false
+    }
+  });
+}
+ 
 // for a Facebook or Google login, look up their info via email and updated Partner Id if missing
 const partnerLogin = async (email, partner, partnerId) => {
   try{ 
