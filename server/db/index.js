@@ -6,8 +6,8 @@ types.setTypeParser(1700, function(val) {
 })
 
 const db = new Pool({
-  // uri: "",
-  user: process.env.DATABASE_USER,
+  uri: process.env.DATABASE_URL,
+  // user: process.env.DATABASE_USER,
   // password: '',
   host: process.env.DATABASE_HOST,
   database: process.env.DATABASE_DATABASE,
