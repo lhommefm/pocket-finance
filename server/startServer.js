@@ -1,5 +1,5 @@
 // in a development environment, use mutate process.env object with dotenv 
-require('dotenv').config()
+// require('dotenv').config()
 
 // start the server on the defined port, referencing primary Express routing file
 const app = require('./index');
