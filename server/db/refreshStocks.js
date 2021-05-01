@@ -17,7 +17,7 @@ const getTicker = async (user_id) => {
       SELECT ticker
       FROM stock_unique_list
     `); 
-    console.log(chalk.yellow('getTicker example row ==> ', JSON.stringify(res.rows[0])));  
+    // console.log(chalk.yellow('getTicker example row ==> ', JSON.stringify(res.rows[0])));  
     return(res.rows);
   } catch (error) {
     console.log(chalk.red('getTicker error ==>', error));
@@ -81,67 +81,3 @@ const addStockDataDatabase = async (stockDataString) => {
 }
   
 module.exports = { refreshStocks }
-
-
-// // refresh stock data in the database
-// const refreshStocks = async (user_id) => {
-//   const fullStockList = await getTicker(user_id);
-//   const recentStockData = await getStockData(fullStockList, 1);
-//   const stockDataString = recentStockData[0];
-//   const tickerString = recentStockData[1];
-//   const result = addStockDataDatabase(stockDataString, tickerString);
-// }
-
-// // get ticker list
-// const getTicker = async (user_id) => {
-//   try {
-//     const res = await db.query(`
-//       SELECT ticker
-//       FROM stock_unique_list
-//     `); 
-//     console.log(chalk.yellow('getTicker example row ==> ', JSON.stringify(res.rows[0])));  
-//     return(res.rows);
-//   } catch (error) {
-//     console.log(chalk.red('getTicker error ==>', error));
-// }
-// }
-
-// // get stock history data from Marketstack and format for database
-// const getStockData = async function (stocks, months=1) {
-
-// // format stock list to a comma seperated string
-// let stockString = ""
-// stocks.map( (row) => stockString += `${row.ticker},` )
-// stockString = stockString.slice(0,stockString.length-1)
-// console.log(chalk.green('stocks list for API ==>',JSON.stringify(stockString)))
-
-// // setup API URL structure
-// let start_date = new Date();
-// start_date.setMonth(start_date.getMonth()-months);
-// const date = start_date.toISOString().substr(0, 10);
-// const URL = `http://api.marketstack.com/v1/eod?access_key=${process.env.MARKETSTACK_API_KEY}&symbols=${stockString}&limit=1000&date_from=${date}`
-// console.log(chalk.yellow('URL for Marketstack API ==> ', URL))
-
-// // pull data from the API
-// let rawStockData = []
-// try {
-//   const marketStackObj = await axios.get(URL);
-//   console.log(chalk.yellow('first marketStackAPI response entry ==> ', JSON.stringify(marketStackObj.data.data[0])))
-//   rawStockData = marketStackObj.data.data
-// } catch (error) {
-//   console.log(chalk.red('marketStack API error ==>', error));    
-// }
-
-// // format data from the API to SQL string
-// let stockDataString = ""
-// let tickerArr = []
-// for (let i = 0; i < rawStockData.length; i++) {
-//   stockDataString += `('${rawStockData[i].symbol}','${rawStockData[i].date}','${rawStockData[i].adj_close}'),`;
-//   if (tickerArr.includes(rawStockData[i].symbol) === false) {tickerArr.push(`${rawStockData[i].symbol}`)};
-// };
-// stockDataString = stockDataString.slice(0,stockDataString.length-1);
-// tickerString = `'${tickerArr.join("','")}'`;
-// console.log(chalk.yellow('data string ==>', stockDataString))
-// console.log(chalk.yellow('ticker string ==>', tickerString))
-// return [ stockDataString, tickerString ]
-// }

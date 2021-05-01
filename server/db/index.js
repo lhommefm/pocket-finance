@@ -6,7 +6,7 @@ types.setTypeParser(1700, function(val) {
 })
 
 let db;
-if (process.env.NODE_ENV === 'development') {
+if (!process.env.NODE_ENV) {
   db = new Pool({
     host: process.env.DATABASE_HOST,
     database: process.env.DATABASE_DATABASE,

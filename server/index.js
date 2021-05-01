@@ -42,7 +42,6 @@ app.use('/api', require('./api'))
 // serve the index.html file for non-specific requests
 app.get('*', function (req, res, next) {
   res.sendFile(path.join(__dirname, '../public/index.html'));
-  next(err)
 });
 
 // 404 handling
