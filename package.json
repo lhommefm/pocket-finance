@@ -4,10 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "deploy": "scripts/deploy",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server",
-    "seed": "node seed.js",
+    "build": "webpack",
+    "start": "node server/startServer.js",
     "start-dev": "webpack -w & nodemon server/startServer.js"
   },
   "author": "",
