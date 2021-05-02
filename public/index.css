@@ -1,14 +1,62 @@
 /* General Styles */
 body {
-    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     margin: 0;
     padding: 0;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td {
+    padding: 5px 5px;
+}
+
+thead {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+thead .numbers {
+    text-align: center;
 }
 
 .flex {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     align-items: flex-start;
+}
+
+.refreshButton {
+    align-self: center;
+    padding: 2px   
+}
+
+.card {
+    margin: 10px;
+    padding: 0px;
+    border: 1px;
+    border-color: black;
+    border-style: solid;
+}
+
+.card-header {
+    margin-bottom: 0 0 5px 0;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    padding: 5px 0 5px 0
+}
+
+.spacer {
+    margin: 10px
+}
+
+.total {
+    background-color: lightgrey;
+    font-weight: bold;
 }
 
 /* Header */
@@ -45,7 +93,12 @@ body {
     padding: 5px;
     text-align: center;
     flex: 1;
-    border: 1px solid lightgrey
+    border: 1px solid lightgrey;
+}
+
+.tabs span {
+    text-align: center;
+    vertical-align: middle;    
 }
 
 .tabs a {
@@ -55,7 +108,6 @@ body {
 }
 .tabs .tab-current {
     list-style-position: inside;
-    border-top-color: blue;
     border-top-width: 5px;
     border-bottom: none;
     background-color: white;
@@ -70,36 +122,46 @@ body {
     height: 1.5em;
 }
 
-.buttonDiv {
-    display: flex;
-    flex-direction: row;    
+.tabs .blue {
+    border-top-color: darkblue;
 }
 
-.refreshButton {
-    align-self: center;
-    padding: 2px   
+.tabs .green {
+    border-top-color: darkgreen;
+}
+
+.tabs .purple {
+    border-top-color: purple;
+}
+
+/* Login */
+
+.login {
+    margin: 15px; 
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border: 1px dotted grey
+}
+
+.login span {
+    margin: 2px 5px 2px 20px; 
+    border: 0
 }
 
 /* Budget Assets */
-table {
+.budget {
+    min-width: 280px
+}
+
+.budget-header {
+    background-color: darkblue;
+    margin:0
+}
+
+.budget table {
+    width: 100%;
     border-collapse: collapse;
-}
-
-td {
-    padding: 2px 7px 2px 7px;
-}
-
-thead {
-    text-decoration: underline;
-}
-
-thead .numbers {
-    text-align: center;
-}
-
-.total {
-    background-color: lightgrey;
-    font-weight: bold;
 }
 
 .total-savings {
@@ -107,28 +169,35 @@ thead .numbers {
     font-weight: bold;
 }
 
-.card {
-    margin: 5px;
-    border: 1px;
-    border-color: black;
-    border-style: solid;
-}
-
-.card-header {
-    margin-bottom: 5px;
-    background-color: darkblue;
-    color: white;
-    text-align: center;
-    font-weight: bold;
-    padding: 5px 0 5px 0
-}
-
 .numbers {
     text-align: right;
 }
 
 .table-label {
-    padding-right:40px
+    padding-right:20px
+}
+
+/* Stock Assets */
+.stock {
+    min-width: 375px;
+}
+
+.stock table {
+    width: 100%;
+}
+
+.stock-header {
+    background-color: darkgreen;
+    margin:0
+}
+
+.allocation-a {
+    width: 180px
+}
+
+.allocation-p {
+    width: 60px;
+    text-align: center;
 }
 
 /* Charts */
@@ -147,11 +216,18 @@ thead .numbers {
 }
 
 .chart {
-    width: 390px;
+    width: 350px;
     min-height: 250px;
-    padding-bottom: 10px;
+    padding: 5px 2px 5px 10px;
+}
+
+.select span {
+    margin: 6px 0 10px 0;
+    display: block 
 }
 
 .select {
-    flex-basis: 100%
+    flex-basis: 100%;
+    padding: 5px
 }
+

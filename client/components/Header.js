@@ -4,9 +4,9 @@ import Axios from 'axios'
 import { Link } from 'react-router-dom';
 import { getStatus } from '../store/getStatus';
 
-const curPage = (route) => {
+const curPage = (route, color) => {
   if (route === window.location.href.substring(window.location.href.lastIndexOf('/') + 1)) {
-    return "tab-current"
+    return `tab-current ${color}`
   } else {
     return ""
   }
@@ -15,16 +15,16 @@ const curPage = (route) => {
 export class Header extends React.Component {
   constructor(props) {
     super(props);
-    this.handeLogout = this.handleLogout.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
   componentDidMount() {
     this.props.checkStatus()
   }
 
-    async handleLogout() {
-    await Axios.delete('/authentication/logout')
-    this.props.checkStatus()
+  async handleLogout() {
+  await Axios.delete('/authentication/logout')
+  this.props.checkStatus()
   }
 
   render() {
@@ -33,27 +33,30 @@ export class Header extends React.Component {
     <div className="tabs">
       <nav>
         <ul>
-        <li className={curPage("budgetAssets")}><Link to="/budgetAssets">
+        <li className={curPage("budgetAssets", "blue")}><Link to="/budgetAssets">
           <img src="/navimages/home.svg" /><br />
           Summary
         </Link></li>
-        <li className={curPage("stocks")}><Link to="/stocks">
+        <li className={curPage("stocks", "green")}><Link to="/stocks">
          <img src="/navimages/pulse.svg" /><br />
           Stocks
         </Link></li>
-        <li className={curPage("macro")}><Link to="/macro">
+        <li className={curPage("macro", "purple")}><Link to="/macro">
           <img src="/navimages/globe-alt.svg" /><br />
           Economy
         </Link></li>
-        <li className={curPage("inputs")}><Link to="/inputs">
+        <li className={curPage("inputs", "grey")}><Link to="/inputs">
           <img src="/navimages/edit.svg" /><br />
           Inputs
         </Link></li>
         <li>
           {
             (this.props.loggedIn) ? 
-            <span onClick={this.handleLogout} >[Logout]</span> :
-            <Link className="link" to="/login">[Login]</Link>
+            <span onClick={this.handleLogout}><img src="/navimages/portrait.svg" /><br />Logout</span> :
+            <Link className="link" to="/login">
+              <img src="/navimages/portrait.svg" /><br />
+              Login
+            </Link>
           }
         </li>
       </ul>

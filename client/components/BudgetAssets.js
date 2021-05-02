@@ -36,8 +36,8 @@ export class BudgetAssets extends React.Component {
      <div className="flex">
 
 {/* Income Table */}
-      <div className="card">
-        <div className="card-header">{"Income & Savings"}</div>
+      <div className="card budget">
+        <div className="card-header budget-header">{"Income & Savings"}</div>
         <table>
           <thead>
               <tr>
@@ -85,9 +85,46 @@ export class BudgetAssets extends React.Component {
      
       </div>
 
+  {/* Income Taxes Table */}
+    <div className="card budget">
+      <div className="card-header budget-header">Taxes</div>
+        <table>
+          <thead>
+              <tr>
+                  <td className="table-label">Tax Type</td>
+                  <td className="numbers">Value</td>
+              </tr>
+          </thead>
+          <tbody>
+            {this.props.taxes.map( (tax) => { return (
+                  <tr key = {tax[0]}>
+                    <td className="table-label">{tax[0]}</td>
+                    <td className="numbers">{new Intl.NumberFormat("en-US", { 
+                      style: "currency", 
+                      currency: "USD", 
+                      maximumFractionDigits: 0 
+                    }).format(tax[1])}</td>
+                  </tr> 
+            )})}
+            <tr className="total">
+                <td className="table-label">Total</td>
+                <td className="numbers">
+                  {new Intl.NumberFormat("en-US", { 
+                      style: "currency", 
+                      currency: "USD", 
+                      maximumFractionDigits: 0 
+                    }).format(
+                      this.taxReducer()
+                  )}
+                </td>
+            </tr>         
+          </tbody>
+        </table>
+      </div>
+
 {/* Expenses Table */}
-      <div className="card">
-      <div className="card-header">Monthly Expenses</div>
+      <div className="card budget">
+      <div className="card-header budget-header">Monthly Expenses</div>
         <table>
           <thead>
               <tr>
@@ -136,46 +173,10 @@ export class BudgetAssets extends React.Component {
         </table>
       </div>
 
-  {/* Income Taxes Table */}
-      <div className="card">
-      <div className="card-header">Taxes</div>
-        <table>
-          <thead>
-              <tr>
-                  <td className="table-label">Tax Type</td>
-                  <td className="numbers">Value</td>
-              </tr>
-          </thead>
-          <tbody>
-            {this.props.taxes.map( (tax) => { return (
-                  <tr key = {tax[0]}>
-                    <td className="table-label">{tax[0]}</td>
-                    <td className="numbers">{new Intl.NumberFormat("en-US", { 
-                      style: "currency", 
-                      currency: "USD", 
-                      maximumFractionDigits: 0 
-                    }).format(tax[1])}</td>
-                  </tr> 
-            )})}
-            <tr className="total">
-                <td className="table-label">Total</td>
-                <td className="numbers">
-                  {new Intl.NumberFormat("en-US", { 
-                      style: "currency", 
-                      currency: "USD", 
-                      maximumFractionDigits: 0 
-                    }).format(
-                      this.taxReducer()
-                  )}
-                </td>
-            </tr>         
-          </tbody>
-        </table>
-      </div>
 
 {/* Overall Asset Table */}
-      <div className="card">
-      <div className="card-header">Asset Snapshot</div>
+      <div className="card budget">
+      <div className="card-header budget-header">Asset Snapshot</div>
         <table>
           <thead>
               <tr>
