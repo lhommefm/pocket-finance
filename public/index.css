@@ -142,7 +142,7 @@ thead .numbers {
 /*** Login ***/
 
 .login {
-    margin: 15px; 
+    margin: 15px 0; 
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -156,7 +156,7 @@ thead .numbers {
 }
 
 .login-buttons {
-    margin: 5px 5px; 
+    margin: 5px 0; 
     display: flex;
     flex-direction: row;
     align-items: center;

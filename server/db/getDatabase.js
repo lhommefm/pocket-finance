@@ -94,7 +94,7 @@ const getMacroData = async (year) => {
     const rows = res.rows;
     // console.log(chalk.green('getMacroDatabase ==> ', JSON.stringify(rows[0])));
     
-    let backgroundColors = ['#e8efff', '#bacfff', '#87acff', '#5186fc'];
+    let backgroundColors = ['#2121CA', '#F3C144', '#A1A1ED', '#0D0D39'];
     // format each series_id set of data in the Chart JS object format
     let seriesDataSet = {  };
     let uniqueSeriesArray = [];
