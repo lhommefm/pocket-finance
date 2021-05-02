@@ -31,27 +31,27 @@ router.get('/refreshMacroData', async function (req, res, next) {
 // get the Budget and Asset data for the User
 router.get('/budgetAssets', async function (req, res, next) {
     const result = await Promise.all([
-        getBudget(req.user.user_id),
-        getAssets(req.user.user_id),
+        getBudget(req.user?req.user.user_id:1),
+        getAssets(req.user?req.user.user_id:1),
     ]);
     res.send(result);
 });
 
 // get the stock assets with latest stock price
 router.get('/getAssetAllocation', async function (req, res, next) {
-    const result = await getAssetAllocation(req.user.user_id);
+    const result = await getAssetAllocation(req.user?req.user.user_id:1);
     res.send(result);
 });
 
 // get the stock assets with latest stock price
 router.get('/getStockAssets', async function (req, res, next) {
-    const result = await getStockAssets(req.user.user_id);
+    const result = await getStockAssets(req.user?req.user.user_id:1);
     res.send(result);
 });
 
 // get the tax settings of a user
 router.get('/getTaxData', async function (req, res, next) {
-    const result = await getTaxData(req.user.user_id);
+    const result = await getTaxData(req.user?req.user.user_id:1);
     res.send(result);
 });
 
@@ -70,9 +70,9 @@ router.get('/getMacroData/year/:year', async function (req, res, next) {
 // pull all inputs
 router.get('/getInputs', async function (req, res, next) {
     const result = await Promise.all([
-        getBudgetAssumptions(req.user.user_id), 
-        getAssetsAssumptions(req.user.user_id), 
-        getTaxAssumptions(req.user.user_id)
+        getBudgetAssumptions(req.user?req.user.user_id:1), 
+        getAssetsAssumptions(req.user?req.user.user_id:1), 
+        getTaxAssumptions(req.user?req.user.user_id:1)
     ]);
     res.send(result);
 });

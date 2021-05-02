@@ -6,48 +6,56 @@ const { insertStock, insertBudget, insertAssets } = require('../db/insertDatabas
 
 // update the stock inputs in the database
 router.post('/updateStock', async function (req, res, next) {
+    if(!req.user){res.send("Guests cannot make updates")}
     const result = await updateStocks(req.body, req.user.user_id);
     res.send(result);
 });
 
 // update the budget inputs in the database
 router.post('/updateBudget', async function (req, res, next) {
+    if(!req.user){res.send("Guests cannot make updates")}
     const result = await updateBudget(req.body, req.user.user_id);
     res.send(result);
 });
 
 // update the asset table in the database
 router.post('/updateAssets', async function (req, res, next) {
+    if(!req.user){res.send("Guests cannot make updates")}
     const result = await updateAssets(req.body, req.user.user_id);
     res.send(result);
 });
 
 // update the tax settings in the database
 router.post('/updateTaxSettings', async function (req, res, next) {
+    if(!req.user){res.send("Guests cannot make updates")}
     const result = await updateTaxSettings(req.body, req.user.user_id);
     res.send(result);
 });
 
 // add stock input in the database
 router.post('/insertStock', async function (req, res, next) {
+    if(!req.user){res.send("Guests cannot make updates")}
     const result = await insertStock(req.body, req.user.user_id);
     res.send(result);
 });
 
 // add budget line item to the database
 router.post('/insertBudget', async function (req, res, next) {
+    if(!req.user){res.send("Guests cannot make updates")}
     const result = await insertBudget(req.body, req.user.user_id);
     res.send(result);
 });
 
 // add assets line item to the database
 router.post('/insertAssets', async function (req, res, next) {
+    if(!req.user){res.send("Guests cannot make updates")}
     const result = await insertAssets(req.body, req.user.user_id);
     res.send(result);
 });
 
 // deletes line item from the database
 router.delete('/delete', async function (req, res, next) {
+    if(!req.user){res.send("Guests cannot make updates")}
     const result = await deleteEntry(req.body.id, req.user.user_id, req.body.db);
     res.send(result);
 });

@@ -56,15 +56,8 @@ export class Macro extends React.Component {
    
     if (this.props.macro[1]) {
       return (
-        <div className="flex">
-          
-          <div className="select">
-            <span>Select a start year: </span>
-            <select value={this.state.year} onChange={this.setYear}>
-              {dropdownYears.map( year => {return (
-                <option key={year} value={year}>{year}</option>
-              )})}
-            </select>  
+        <div className="stock-vertical">
+          <div>
             <form onSubmit={this.handleSubmit} className='refreshButton'>
               <button type='submit' value="/api/refreshMacroData">Refresh Macro Data</button>
             </form>
@@ -72,79 +65,92 @@ export class Macro extends React.Component {
               <p key={index}>{message}</p>
             )})}  
           </div>
-
-          <div className="card">
-            <div className="card-header">Government Financials</div>
-            {this.state.governmentFinancials.map( (chart_group, index) => {
-              return (
-                <ChartCard chart_group={this.props.macro[chart_group]} key={index} />
-              )
-            })}
+          <div className="select">
+            <span>Select a start year: 
+              <select value={this.state.year} onChange={this.setYear}>
+                {dropdownYears.map( year => {return (
+                  <option key={year} value={year}>{year}</option>
+                )})}
+              </select>  
+            </span>
           </div>
-
-          <div className="card">
-            <div className="card-header">Macroeconomic Indicators</div>
-            {this.state.macroeconomic.map( (chart_group, index) => {
-              return (
-                <ChartCard chart_group={this.props.macro[chart_group]} key={index} />
-              )
-            })}
-          </div>
-
-          <div className="card">
-            <div className="card-header">Labor</div>
-            {this.state.labor.map( (chart_group, index) => {
-              return (
-                <ChartCard chart_group={this.props.macro[chart_group]} key={index} />
-              )
-            })}
-          </div>
-
-          <div className="card">
-            <div className="card-header">Inflation</div>
-            {this.state.inflation.map( (chart_group, index) => {
-              return (
-                <ChartCard chart_group={this.props.macro[chart_group]} key={index} />
-              )
-            })}
-          </div>
-
-          <div className="card">
-            <div className="card-header">Consumer Wealth</div>
-            {this.state.consumerWealth.map( (chart_group, index) => {
-              return (
-                <ChartCard chart_group={this.props.macro[chart_group]} key={index} />
-              )
-            })}
-          </div>    
-
-          <div className="card">
-            <div className="card-header">Consumer Spending</div>
-            {this.state.consumerSpending.map( (chart_group, index) => {
-              return (
-                <ChartCard chart_group={this.props.macro[chart_group]} min="0" key={index} />
-              )
-            })}
-          </div>
-
-          <div className="card">
-            <div className="card-header">Prices</div>
-            {this.state.prices.map( (chart_group, index) => {
-              return (
-                <ChartCard chart_group={this.props.macro[chart_group]} key={index} />
-              )
-            })}
-          </div>
+          <div className="flex">
+            
            
-          <div className="card">
-            <div className="card-header">Stocks</div>
-            {this.state.stocks.map( (chart_group, index) => {
-              return (
-                <ChartCard chart_group={this.props.macro[chart_group]} key={index} />
-              )
-            })}
-          </div>
 
+            <div className="card">
+              <div className="card-header chart-header">Government Financials</div>
+              {this.state.governmentFinancials.map( (chart_group, index) => {
+                return (
+                  <ChartCard chart_group={this.props.macro[chart_group]} key={index} />
+                )
+              })}
+            </div>
+
+            <div className="card">
+              <div className="card-header chart-header">Macroeconomic Indicators</div>
+              {this.state.macroeconomic.map( (chart_group, index) => {
+                return (
+                  <ChartCard chart_group={this.props.macro[chart_group]} key={index} />
+                )
+              })}
+            </div>
+
+            <div className="card">
+              <div className="card-header chart-header">Labor</div>
+              {this.state.labor.map( (chart_group, index) => {
+                return (
+                  <ChartCard chart_group={this.props.macro[chart_group]} key={index} />
+                )
+              })}
+            </div>
+
+            <div className="card">
+              <div className="card-header chart-header">Inflation</div>
+              {this.state.inflation.map( (chart_group, index) => {
+                return (
+                  <ChartCard chart_group={this.props.macro[chart_group]} key={index} />
+                )
+              })}
+            </div>
+
+            <div className="card">
+              <div className="card-header chart-header">Consumer Wealth</div>
+              {this.state.consumerWealth.map( (chart_group, index) => {
+                return (
+                  <ChartCard chart_group={this.props.macro[chart_group]} key={index} />
+                )
+              })}
+            </div>    
+
+            <div className="card">
+              <div className="card-header chart-header">Consumer Spending</div>
+              {this.state.consumerSpending.map( (chart_group, index) => {
+                return (
+                  <ChartCard chart_group={this.props.macro[chart_group]} min="0" key={index} />
+                )
+              })}
+            </div>
+
+            <div className="card">
+              <div className="card-header chart-header">Prices</div>
+              {this.state.prices.map( (chart_group, index) => {
+                return (
+                  <ChartCard chart_group={this.props.macro[chart_group]} key={index} />
+                )
+              })}
+            </div>
+            
+            <div className="card">
+              <div className="card-header chart-header">Stocks</div>
+              {this.state.stocks.map( (chart_group, index) => {
+                return (
+                  <ChartCard chart_group={this.props.macro[chart_group]} key={index} />
+                )
+              })}
+            </div>
+
+          </div>
         </div>
       )
     } else {

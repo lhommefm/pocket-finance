@@ -44,21 +44,23 @@ export class Stocks extends React.Component {
   render() {
     if (typeof(this.props.stocks.FB)==="undefined") {return ("Data Loading")}
     else {return (
-     <div className="flex">
-        {this.state.messages.map( (message, index) => { return (
-          <p key={index}>{message}</p>
-        )})}
-        <form onSubmit={this.handleSubmit} className='refreshButton'>
-          <button type='submit' value="/api/refreshStockData">Refresh Stock Data</button>
-        </form> 
-
+     <div className="stock-vertical">
+        <div>
+          <form onSubmit={this.handleSubmit} className='refreshButton'>
+            <button type='submit' value="/api/refreshStockData">Refresh Stock Data</button>
+           </form>
+          {this.state.messages.map( (message, index) => { return (
+            <p key={index}>{message}</p>
+          )})} 
+        </div>
+       <div className="flex">
 {/* Overall Asset Table */}
       <div className="card stock">
         <div className="card-header stock-header">Allocation Overview</div>
         <table>
           <thead>
               <tr>
-                  <td className="table-label allocation-a">Asset_Type</td>
+                  <td className="table-label allocation-a">Asset Type</td>
                   <td className="numbers">Value</td>
                   <td className="allocation-p">%</td>
               </tr>
@@ -161,8 +163,9 @@ export class Stocks extends React.Component {
       </div>
       
      </div>
+    </div>
     )};
-      
+
   }
 
 }

@@ -23,10 +23,12 @@ ReactDOM.render(
     <Router>
       <Route path='/' component={Header} />
       <Route path='/' component={Login} />  
-      <Route path='/macro' component={Macro} />
-      <Route path='/budgetAssets' component={BudgetAssets} />
-      <Route path='/stocks' component={Stocks} />
-      <Route path='/inputs' component={Inputs} />
+      <Switch>
+        <Route path='/macro' component={Macro} />
+        <Route path='/stocks' component={Stocks} />
+        <Route path='/inputs' component={Inputs} />
+        <Route path='/' component={BudgetAssets} />
+      </Switch>
     </Router>
   </Provider>,
   document.getElementById('app')

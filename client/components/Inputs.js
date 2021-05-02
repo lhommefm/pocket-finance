@@ -116,61 +116,74 @@ export class Inputs extends React.Component {
 
 {/* Stock Table */}
       <div className="card">
-        <div className="card-header">Update Existing Stock Info</div>
+        <div className="card-header input-header">Update Existing Stock Info</div>
+            <div className="row">
+              <div className="stock-account">Account</div>
+              <div>Ticker</div>
+              <div>Asset Class</div>
+              <div>Shares</div>
+              <div>Remove</div>
+            </div>
             {this.state.stockListToUpdate.map( (stockEntry, index) => { return (
-              <form key={index}>
-                <select index={index} name="account_type" value={stockEntry.account_type} onChange={(event) => this.updateState(event, 'stockListToUpdate')}>
+              <div className="row" key={index}>
+                <form>
+                  <select index={index} name="account_type" value={stockEntry.account_type} onChange={(event) => this.updateState(event, 'stockListToUpdate')}>
+                    <option value="Individual">Individual</option>
+                    <option value="401K">401K</option>
+                    <option value="IRA">IRA</option>
+                    <option value="Roth IRA">Roth IRA</option>
+                  </select>
+                  <input index={index} type="text" name="ticker" value={stockEntry.ticker} className="ticker" onChange={(event) => this.updateState(event, 'stockListToUpdate')} />
+                  <select index={index} name="asset_class" value={stockEntry.asset_class} onChange={(event) => this.updateState(event, 'stockListToUpdate')}>
+                    <option value="Commodity Stocks">Commodity Stocks</option>
+                    <option value="International Stocks">International Stocks</option>
+                    <option value="Domestic Stocks">Domestic Stocks</option>
+                    <option value="Bonds">Bonds</option>
+                    <option value="REIT Stocks">REIT Stocks</option>
+                  </select>
+                  <input className="quantity" index={index} type="text" name="quantity" value={stockEntry.quantity} onChange={(event) => this.updateState(event, 'stockListToUpdate')} />
+                </form> 
+                <input className="delete" type="submit" value="X" onClick={(event) => this.deleteItem(stockEntry.id, 'stock_assets', event, 'stock')} />
+              </div>
+            )})}              
+              <input type="submit" value="Update Stock Ownership" onClick={() => this.updateDatabase(
+                this.props.stockTable,
+                this.state.stockListToUpdate,
+                '/api/update/updateStock',
+                'stock'
+              )} />
+              <div className="row">
+              <form>
+                <select index="0" name="account_type" value={this.state.newStock[0].account_type} onChange={(event) => this.updateState(event, 'newStock')}>
                   <option value="Individual">Individual</option>
                   <option value="401K">401K</option>
                   <option value="IRA">IRA</option>
                   <option value="Roth IRA">Roth IRA</option>
                 </select>
-                <input index={index} type="text" name="ticker" value={stockEntry.ticker} onChange={(event) => this.updateState(event, 'stockListToUpdate')} />
-                <select index={index} name="asset_class" value={stockEntry.asset_class} onChange={(event) => this.updateState(event, 'stockListToUpdate')}>
-                  <option value="Commodity Stocks">Commodity Stocks</option>
-                  <option value="International Stocks">International Stocks</option>
-                  <option value="Domestic Stocks">Domestic Stocks</option>
-                  <option value="Bonds">Bonds</option>
-                  <option value="REIT Stocks">REIT Stocks</option>
-                </select>
-                <input index={index} type="text" name="quantity" value={stockEntry.quantity} onChange={(event) => this.updateState(event, 'stockListToUpdate')} />
-                <input type="submit" value="X" onClick={(event) => this.deleteItem(stockEntry.id, 'stock_assets', event, 'stock')} />
+                <input className="ticker" index="0" type="text" name="ticker" value={this.state.newStock[0].ticker} onChange={(event) => this.updateState(event, 'newStock')} />
+                <select index="0" name="asset_class" value={this.state.newStock[0].asset_class} onChange={(event) => this.updateState(event, 'newStock')}>
+                    <option value="Commodity Stocks">Commodity Stocks</option>
+                    <option value="International Stocks">International Stocks</option>
+                    <option value="Domestic Stocks">Domestic Stocks</option>
+                    <option value="Bonds">Bonds</option>
+                    <option value="REIT Stocks">REIT Stocks</option>
+                  </select>
+                <input className="quantity" index="0" type="text" name="quantity" value={this.state.newStock[0].quantity} onChange={(event) => this.updateState(event, 'newStock')} />
               </form> 
-            )})}
-            <input type="submit" value="Update Stock Ownership" onClick={() => this.updateDatabase(
-              this.props.stockTable,
-              this.state.stockListToUpdate,
-              '/api/update/updateStock',
+              </div>
+              <input className="delete" type="submit" value="Add New Stock" onClick={() => this.insertDatabase(
+              this.state.newStock[0],
+              '/api/update/insertStock',
+              'newStock',
               'stock'
-            )} />
-            <form>
-              <select index="0" name="account_type" value={this.state.newStock[0].account_type} onChange={(event) => this.updateState(event, 'newStock')}>
-                <option value="Individual">Individual</option>
-                <option value="401K">401K</option>
-                <option value="IRA">IRA</option>
-                <option value="Roth IRA">Roth IRA</option>
-              </select>
-              <input index="0" type="text" name="ticker" value={this.state.newStock[0].ticker} onChange={(event) => this.updateState(event, 'newStock')} />
-              <select index="0" name="asset_class" value={this.state.newStock[0].asset_class} onChange={(event) => this.updateState(event, 'newStock')}>
-                  <option value="Commodity Stocks">Commodity Stocks</option>
-                  <option value="International Stocks">International Stocks</option>
-                  <option value="Domestic Stocks">Domestic Stocks</option>
-                  <option value="Bonds">Bonds</option>
-                  <option value="REIT Stocks">REIT Stocks</option>
-                </select>
-              <input index="0" type="text" name="quantity" value={this.state.newStock[0].quantity} onChange={(event) => this.updateState(event, 'newStock')} />
-            </form> 
-            <input type="submit" value="Add New Stock" onClick={() => this.insertDatabase(
-            this.state.newStock[0],
-            '/api/update/insertStock',
-            'newStock',
-            'stock'
-            )} /> 
+              )} />
+
+
       </div>
 
 {/* Budget Table */}
       <div className="card">
-        <div className="card-header">Update Budget</div>
+        <div className="card-header input-header">Update Budget</div>
             {this.state.budgetToUpdate.map( (budgetEntry, index) => { return (
               <form key={index}>
                 <span>{budgetEntry.activity}</span>
@@ -214,7 +227,7 @@ export class Inputs extends React.Component {
 
 {/* Assets Table */}
 <div className="card">
-        <div className="card-header">Update Assets</div>
+        <div className="card-header input-header">Update Assets</div>
             {this.state.assetsToUpdate.map( (assetEntry, index) => { return (
               <form key={index}>
                  <select index={index} name="asset_type" value={assetEntry.asset_type} onChange={(event) => this.updateState(event, 'assetsToUpdate')}>
@@ -252,7 +265,7 @@ export class Inputs extends React.Component {
 
 {/* Tax Settings */}
       <div className="card">
-        <div className="card-header">Update Tax Settings</div>  
+        <div className="card-header input-header">Update Tax Settings</div>  
           {!this.state.taxSettingsToUpdate[0] ? "Data loading" : 
             <form>
               <select index="0" name="filing_status" value={this.state.taxSettingsToUpdate[0].filing_status} onChange={(event) => this.updateState(event, 'taxSettingsToUpdate')}>

@@ -33,7 +33,7 @@ export class Header extends React.Component {
     <div className="tabs">
       <nav>
         <ul>
-        <li className={curPage("budgetAssets", "blue")}><Link to="/budgetAssets">
+        <li className={curPage("", "blue")}><Link to="/">
           <img src="/navimages/home.svg" /><br />
           Summary
         </Link></li>
@@ -45,7 +45,7 @@ export class Header extends React.Component {
           <img src="/navimages/globe-alt.svg" /><br />
           Economy
         </Link></li>
-        <li className={curPage("inputs", "grey")}><Link to="/inputs">
+        <li className={curPage("inputs", "black")}><Link to="/inputs">
           <img src="/navimages/edit.svg" /><br />
           Inputs
         </Link></li>
