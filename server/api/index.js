@@ -17,8 +17,8 @@ router.use('/update', require('./updateDB'))
 // refresh stock price history in the database for relevant stocks
 router.get('/refreshStockData', async function (req, res, next) {
     const result = await refreshStocks(req.user.user_id);
-    // console.log ('budgetAssetsRoute userid ==>',req.user.user_id,'result ==>', JSON.stringify(result));
-    res.send(result);
+    console.log ('refresh stock price result ==>', JSON.stringify(result));
+    res.send(result || '0');
 });
 
 // get the latest Fred & Quandl economic numbers from the API

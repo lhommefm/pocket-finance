@@ -6,7 +6,7 @@ const axios = require('axios');
 const refreshStocks = async (user_id) => {
     const stockList = await getTicker(user_id);
     const stockData = await getStockData(stockList);
-    const result = addStockDataDatabase(stockData);
+    const result = await addStockDataDatabase(stockData);
     return result.rowCount
 }
 
@@ -17,7 +17,7 @@ const getTicker = async (user_id) => {
       SELECT ticker
       FROM stock_unique_list
     `); 
-    // console.log(chalk.yellow('getTicker example row ==> ', JSON.stringify(res.rows[0])));  
+    console.log(chalk.yellow('getTicker example row ==> ', JSON.stringify(res.rows[0])));  
     return(res.rows);
   } catch (error) {
     console.log(chalk.red('getTicker error ==>', error));
@@ -43,16 +43,27 @@ const getStockData = async function (stocks) {
   // console.log(chalk.yellow('stocks list array for API, first index  ==>',stockStringArray[0]))
 
   // pull data from the API: loop through each set of 3 tickers, and loop through each row of the response to format for SQL
-  let stockDataString = ""
+  let stockDataString = "";
+  let missingTickers = [];
   for (let i = 0; i < stockStringArray.length; i++) {
-    const URL = `http://api.marketstack.com/v1/eod?access_key=${process.env.MARKETSTACK_API_KEY}&symbols=${stockStringArray[i]}&limit=1000&date_from=2021-01-01`
-    // console.log(chalk.yellow('URL for Marketstack API ==> ', URL))
+    const marketURL = `http://api.marketstack.com/v1/eod?access_key=${process.env.MARKETSTACK_API_KEY}&symbols=${stockStringArray[i]}&limit=1000&date_from=2021-01-01`
+    // console.log(chalk.yellow('URL for Marketstack API ==> ', marketURL))
 
     try {
-      const marketStackObj = await axios.get(URL);
-      // console.log(chalk.yellow('first marketStackAPI response entry ==> ', JSON.stringify(marketStackObj.data.data[0])));
+      const marketStackObj = await axios.get(marketURL);
+      console.log(chalk.yellow('first marketStackAPI response entry ==> ', JSON.stringify(marketStackObj.data.data[0])));
       let rawStockData = marketStackObj.data.data;
+      console.log(chalk.yellow("raw stock data ==>", JSON.stringify(rawStockData)))
+      if (rawStockData.length === 0) {
+        missingTickers.push(stockStringArray[i]); 
+        console.log(chalk.yellow('missing tickers ==>', JSON.stringify(missingTickers)))
+      }
+      
       for (let j = 0; j < rawStockData.length; j++) {
+        if (rawStockData[j].length===0){
+          missingTickers.push(stockStringArray[i][j]); 
+          console.log(chalk.yellow('missing tickers ==>', stockStringArray[i][j], JSON.stringify(missingTickers)))
+        } 
         stockDataString += `('${rawStockData[j].symbol}','${rawStockData[j].date}','${rawStockData[j].adj_close}'),`;
       };
     } catch (error) {
@@ -60,8 +71,27 @@ const getStockData = async function (stocks) {
     }
 
   }
+
+  for (let i = 0; i < missingTickers.length; i++) {
+    const alphaURL = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${missingTickers[i]}&apikey=${process.env.ALPHAVANTAGE_API_KEY}`
+  
+    try {
+      const alphaObj = await axios.get(alphaURL);
+      let rawStockData = alphaObj.data["Time Series (Daily)"];
+      console.log(chalk.yellow('raw stock data ==>',rawStockData));
+      let rawStockDates = Object.keys(rawStockData);
+      console.log(chalk.yellow('first date key ==>',rawStockDates[0]));
+      for (let j = 0; j < rawStockDates.length; j++) { 
+        stockDataString += `('${missingTickers[i]}','${rawStockDates[j]}','${rawStockData[rawStockDates[j]]['5. adjusted close']}'),`;
+      };
+    } catch (error) {
+      console.log(chalk.red('alphaVantage API error ==>', error));    
+    }
+
+  }
+
   stockDataString = stockDataString.slice(0,stockDataString.length-1)
-  // console.log(chalk.yellow('data string ==>', stockDataString))  
+  console.log(chalk.yellow('data string ==>', stockDataString))  
   return stockDataString
 }
 
@@ -73,7 +103,7 @@ const addStockDataDatabase = async (stockDataString) => {
     VALUES ${stockDataString}
     ON CONFLICT (ticker, date) DO NOTHING
     `); 
-    // console.log(chalk.blue('addStockDataDatabase ==> ', JSON.stringify(res)));
+    console.log(chalk.blue('addStockDataDatabase ==> ', JSON.stringify(res)));
     return(res);
   } catch (error) {
     console.log(chalk.red('addStockDataDatabase error ==>', error));
@@ -81,3 +111,4 @@ const addStockDataDatabase = async (stockDataString) => {
 }
   
 module.exports = { refreshStocks }
+

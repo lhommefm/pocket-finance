@@ -1,5 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
+import Axios from 'axios'
+
+// import functions and modules
 import { getAssetAllocation } from "../store/getAssetAllocation";
 import { getStockAssets } from '../store/getStockAssets';
 import { getStockHistory } from "../store/getStocks";
