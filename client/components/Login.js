@@ -4,7 +4,7 @@ import { getStatus } from '../store/getStatus';
 
 const message = () =>{
   const url = window.location.href.substring(window.location.href.lastIndexOf('/') + 1)
-  if (url === "" || url === "stocks") {
+  if (url === "summary" || url === "stocks") {
     return(<div className="login-message">You are not logged in - financial reports show illustrative data.</div>)}
   if (url === "inputs") {
     return(<div className="login-message">Illustrative interface below - guests cannot update data.</div>)}
