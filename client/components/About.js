@@ -5,13 +5,12 @@ export const About = ( ) => {
     <div className="about">
       <div className="about-header"><h2>Pocket Finance - Intro</h2></div>
       <div className="about-note">
-        <p>Pocket Finance provides a portable snapshot of your finances: income, expenses, and assets. Features include:
+        <p><span className="bold">Pocket Finance provides a portable snapshot of your finances: income, expenses, and assets. </span>Features include:</p>
           <ul>
             <li>Estimate federal and state level income tax, for either Single or Married filing status, and assuming standard deduction.</li>
             <li>Up to date stock income and asset values using end of day stock prices.</li>
             <li>Easily update income, expenses, and assets through a user-interface.</li>
           </ul>
-        </p>
         <p>While the site is fully functional, the limitations of the free tiers of Heroku and the stock data APIs means that scaling users requires a paid upgrade.
           For this reason, only the Google login method works when deployed.
         </p>

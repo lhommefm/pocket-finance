@@ -426,3 +426,7 @@ thead .numbers {
     font-size: 1em;
     padding: 0 0 0 5px
 }
+
+.bold {
+    font-weight: bold;
+}
