@@ -290,10 +290,23 @@ thead .numbers {
     margin:0
 }
 
+.button-input {
+    margin: 2px 5px 10px 5px
+}
+
+.button-tax {
+    margin: 0 0 0 15px
+}
+
+.interest {
+    text-align: center;
+}
+
 .row {
     display: flex;
     flex-direction: row;
     padding: 2px 0;
+    margin: 2px 0;
     font-size: small;
     border-top-width: 1px;
     border-bottom-width: 1px;
@@ -309,18 +322,20 @@ thead .numbers {
     font-weight: bold
 }
 
-.row select {
-    border: none;
-    padding: 2px
-}
-
 .row input {
     border: none;
     padding: 2px 4px
 }
 
-.ticker {
-    width: 60px
+.row select {
+    border: none;
+    padding: 2px
+}
+
+.table-names {
+    background-color: lightgray;
+    margin: 5px 0 0 0;
+    padding: 2px 5px
 }
 
 .quantity {
@@ -328,10 +343,26 @@ thead .numbers {
     text-align: right;
 }
 
-.delete {
-    margin: 0 10px
+.sixty {
+    width: 60px
 }
 
-.stock-account {
+.seventy {
+    width: 70px
+}
+
+.hundred {
     width: 100px
+}
+
+.hundred-twentyfive {
+    width: 125px
+}
+
+.hundred-forty {
+    width: 140px
+}
+
+.hundred-fifty {
+    width: 150px
 }
