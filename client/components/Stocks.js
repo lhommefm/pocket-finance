@@ -48,14 +48,16 @@ export class Stocks extends React.Component {
     if (typeof(this.props.stocks.FB)==="undefined") {return ("Data Loading")}
     else {return (
      <div className="stock-vertical">
-        <div>
-          <form onSubmit={this.handleSubmit} className='refreshButton'>
-            <button type='submit' value="/api/refreshStockData">Refresh Stock Data</button>
-           </form>
-          {this.state.messages.map( (message, index) => { return (
-            <p key={index}>{message}</p>
-          )})} 
-        </div>
+          {!!this.props.loggedIn ? 
+          (<div>
+            <form onSubmit={this.handleSubmit} className='refreshButton'>
+              <button type='submit' value="/api/refreshStockData">Refresh Stock Data</button>
+            </form>
+            {this.state.messages.map( (message, index) => { return (
+              <p key={index}>{message}</p>
+            )})} 
+          </div>) :
+          <div></div>}
        <div className="flex">
 {/* Overall Asset Table */}
       <div className="card stock">
@@ -177,7 +179,8 @@ const mapState = (state) => {
   return {
     stockTable: state.stockTable,
     assetTable: state.assetTable,
-    stocks: state.stocks
+    stocks: state.stocks,
+    loggedIn: state.status
   };
 };
 

@@ -17,7 +17,7 @@ const getTicker = async (user_id) => {
       SELECT ticker
       FROM stock_unique_list
     `); 
-    console.log(chalk.yellow('getTicker example row ==> ', JSON.stringify(res.rows[0])));  
+    // console.log(chalk.yellow('getTicker example row ==> ', JSON.stringify(res.rows[0])));  
     return(res.rows);
   } catch (error) {
     console.log(chalk.red('getTicker error ==>', error));
@@ -51,27 +51,29 @@ const getStockData = async function (stocks) {
 
     try {
       const marketStackObj = await axios.get(marketURL);
-      console.log(chalk.yellow('first marketStackAPI response entry ==> ', JSON.stringify(marketStackObj.data.data[0])));
+      // console.log(chalk.yellow('first marketStackAPI response entry ==> ', JSON.stringify(marketStackObj.data.data[0])));
       let rawStockData = marketStackObj.data.data;
-      console.log(chalk.yellow("raw stock data ==>", JSON.stringify(rawStockData)))
+      // console.log(chalk.yellow("raw stock data ==>", JSON.stringify(rawStockData)))
       if (rawStockData.length === 0) {
         missingTickers.push(stockStringArray[i]); 
         console.log(chalk.yellow('missing tickers ==>', JSON.stringify(missingTickers)))
       }
       
+      let submittedTickers = stockStringArray[i].split(",")
+      console.log('submitted tickers ==>', submittedTickers)
       for (let j = 0; j < rawStockData.length; j++) {
-        if (rawStockData[j].length===0){
-          missingTickers.push(stockStringArray[i][j]); 
-          console.log(chalk.yellow('missing tickers ==>', stockStringArray[i][j], JSON.stringify(missingTickers)))
-        } 
         stockDataString += `('${rawStockData[j].symbol}','${rawStockData[j].date}','${rawStockData[j].adj_close}'),`;
+        if (submittedTickers.indexOf(rawStockData[j].symbol) > -1) {submittedTickers.splice(submittedTickers.indexOf(rawStockData[j].symbol),1)}
       };
+      missingTickers.push(...submittedTickers)
+
     } catch (error) {
       console.log(chalk.red('marketStack API error ==>', error));    
     }
 
   }
 
+  console.log(chalk.yellow('missing tickers to process ==>', JSON.stringify(missingTickers)))
   for (let i = 0; i < missingTickers.length; i++) {
     const alphaURL = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${missingTickers[i]}&apikey=${process.env.ALPHAVANTAGE_API_KEY}`
   
