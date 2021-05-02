@@ -33,7 +33,7 @@ export class Header extends React.Component {
     <div className="tabs">
       <nav>
         <ul>
-        <li className={curPage("", "blue")}><Link to="/">
+        <li className={curPage("summary", "blue")}><Link to="/summary">
           <img src="/navimages/home.svg" /><br />
           Summary
         </Link></li>

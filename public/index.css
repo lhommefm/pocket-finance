@@ -284,18 +284,18 @@ thead .numbers {
 
 
 /*** Inputs ***/
-.input-header {
-    background-color: black;
-    min-width: 375px;
-    margin:0
-}
-
 .button-input {
     margin: 2px 5px 10px 5px
 }
 
 .button-tax {
     margin: 0 0 0 15px
+}
+
+.input-header {
+    background-color: black;
+    min-width: 375px;
+    margin:0
 }
 
 .interest {
@@ -365,4 +365,64 @@ thead .numbers {
 
 .hundred-fifty {
     width: 150px
+}
+
+
+/*** About ***/
+.about {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.about-header {
+    background-color: lightblue;
+    width: 80%;
+    border: 1px dotted black;
+    margin: 10px 0 0 0;
+    padding: 10px
+}
+
+.grey {
+    background-color: grey;
+    color: white
+}
+
+.about-note {
+    width: 80%;
+    border: 1px dotted black;
+    padding: 10px;
+}
+
+.about-note a {
+    text-decoration: none
+}
+
+.about-header h2 {
+    font-size: 1.25em;
+    margin: 0;
+    padding: 0
+}
+
+.about-header h3 {
+    font-size: 1em;
+    margin: 0;
+    padding: 0
+}
+
+.about-note h3 {
+    font-size: 1em;
+    margin: 0;
+    padding: 0
+}
+
+.about-note p {
+    padding: 0;
+    margin: 0
+}
+
+.about-note span {
+    font-size: 1em;
+    padding: 0 0 0 5px
 }

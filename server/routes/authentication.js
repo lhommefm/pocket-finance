@@ -30,7 +30,7 @@ router.get('/google', passport.authenticate('google', {
 
 // login with Google callback, begins with /authentication
 router.get('/google/callback',  passport.authenticate('google', {
-  successRedirect: '/',
+  successRedirect: '/summary',
   failureRedirect: '/authenticate/login'
 }));
 
@@ -41,7 +41,7 @@ router.get('/facebook', passport.authenticate('facebook', {
 
 // login with Facebook callback, begins with /authentication
 router.get('/facebook/callback',  passport.authenticate('facebook', {
-  successRedirect: '/',
+  successRedirect: '/summary',
   failureRedirect: '/authenticate/login'
 }));
 

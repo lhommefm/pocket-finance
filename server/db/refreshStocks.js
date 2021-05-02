@@ -56,11 +56,11 @@ const getStockData = async function (stocks) {
       // console.log(chalk.yellow("raw stock data ==>", JSON.stringify(rawStockData)))
       if (rawStockData.length === 0) {
         missingTickers.push(stockStringArray[i]); 
-        console.log(chalk.yellow('missing tickers ==>', JSON.stringify(missingTickers)))
+        // console.log(chalk.yellow('missing tickers ==>', JSON.stringify(missingTickers)))
       }
       
       let submittedTickers = stockStringArray[i].split(",")
-      console.log('submitted tickers ==>', submittedTickers)
+      // console.log('submitted tickers ==>', submittedTickers)
       for (let j = 0; j < rawStockData.length; j++) {
         stockDataString += `('${rawStockData[j].symbol}','${rawStockData[j].date}','${rawStockData[j].adj_close}'),`;
         if (submittedTickers.indexOf(rawStockData[j].symbol) > -1) {submittedTickers.splice(submittedTickers.indexOf(rawStockData[j].symbol),1)}
@@ -80,9 +80,9 @@ const getStockData = async function (stocks) {
     try {
       const alphaObj = await axios.get(alphaURL);
       let rawStockData = alphaObj.data["Time Series (Daily)"];
-      console.log(chalk.yellow('raw stock data ==>',rawStockData));
+      // console.log(chalk.yellow('raw stock data ==>',rawStockData));
       let rawStockDates = Object.keys(rawStockData);
-      console.log(chalk.yellow('first date key ==>',rawStockDates[0]));
+      // console.log(chalk.yellow('first date key ==>',rawStockDates[0]));
       for (let j = 0; j < rawStockDates.length; j++) { 
         stockDataString += `('${missingTickers[i]}','${rawStockDates[j]}','${rawStockData[rawStockDates[j]]['5. adjusted close']}'),`;
       };
@@ -93,7 +93,7 @@ const getStockData = async function (stocks) {
   }
 
   stockDataString = stockDataString.slice(0,stockDataString.length-1)
-  console.log(chalk.yellow('data string ==>', stockDataString))  
+  // console.log(chalk.yellow('data string ==>', stockDataString))  
   return stockDataString
 }
 

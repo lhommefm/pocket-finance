@@ -36,28 +36,28 @@ router.post('/updateTaxSettings', async function (req, res, next) {
 router.post('/insertStock', async function (req, res, next) {
     if(!req.user){res.send("Guests cannot make updates")}
     const result = await insertStock(req.body, req.user.user_id);
-    res.send(result);
+    res.send({result});
 });
 
 // add budget line item to the database
 router.post('/insertBudget', async function (req, res, next) {
     if(!req.user){res.send("Guests cannot make updates")}
     const result = await insertBudget(req.body, req.user.user_id);
-    res.send(result);
+    res.send({result});
 });
 
 // add assets line item to the database
 router.post('/insertAssets', async function (req, res, next) {
     if(!req.user){res.send("Guests cannot make updates")}
     const result = await insertAssets(req.body, req.user.user_id);
-    res.send(result);
+    res.send({result});
 });
 
 // deletes line item from the database
 router.delete('/delete', async function (req, res, next) {
     if(!req.user){res.send("Guests cannot make updates")}
     const result = await deleteEntry(req.body.id, req.user.user_id, req.body.db);
-    res.send(result);
+    res.send({result});
 });
 
 // 404 if the API route doesn't exist
