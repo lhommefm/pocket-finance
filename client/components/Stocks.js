@@ -30,7 +30,7 @@ export class Stocks extends React.Component {
     this.setState({
       messages: [
         ...this.state.messages,
-        `Updated ${response.data[0]} Stock entries`,
+        `Updated ${response.data.number} Stock entries`,
       ]
     });
     setTimeout( () => {
@@ -49,7 +49,7 @@ export class Stocks extends React.Component {
     else {return (
      <div className="stock-vertical">
           {!!this.props.loggedIn ? 
-          (<div>
+          (<div className="update-button">
             <form onSubmit={this.handleSubmit} className='refreshButton'>
               <button type='submit' value="/api/refreshStockData">Refresh Stock Data</button>
             </form>

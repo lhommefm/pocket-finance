@@ -18,13 +18,13 @@ router.use('/update', require('./updateDB'))
 router.get('/refreshStockData', async function (req, res, next) {
     const result = await refreshStocks(req.user.user_id);
     console.log ('refresh stock price result ==>', JSON.stringify(result));
-    res.send(result || '0');
+    res.send({number: result});
 });
 
 // get the latest Fred & Quandl economic numbers from the API
 router.get('/refreshMacroData', async function (req, res, next) {
     const result = await Promise.all([refreshFred(),refreshQuandl()])
-    // console.log(chalk.yellow('refreshMacro Fred result ==>', JSON.stringify(result[0]),'Quandl result ==>', JSON.stringify(result[1]),));
+    console.log(chalk.yellow('refreshMacro Fred result ==>', JSON.stringify(result[0]),'Quandl result ==>', JSON.stringify(result[1]),));
     res.send(result);
 });
 

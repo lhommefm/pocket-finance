@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { getMacroData } from "../store/getMacro";
 import { ChartCard } from './MacroCharts';
+import Axios from 'axios';
 
 const dropdownYears = [2015,2016,2017,2018,2019,2020]
 
@@ -31,15 +32,13 @@ export class Macro extends React.Component {
   async handleSubmit(event) {
     event.preventDefault()
     const response = await Axios.get(event.target[0].value)
-    if(event.target[0].value === "/api/refreshMacroData") {
-      this.setState({
+    this.setState({
       messages: [
         ...this.state.messages,
         `Updated ${response.data[0]} Fred entries`,
         `Updated ${response.data[1]} Quandl entries`
       ]
-    });
-    }; 
+    }); 
     setTimeout( () => {
       this.setState({
         messages: []
@@ -57,7 +56,7 @@ export class Macro extends React.Component {
     if (this.props.macro[1]) {
       return (
         <div className="stock-vertical">
-          <div>
+          <div className="update-button">
             <form onSubmit={this.handleSubmit} className='refreshButton'>
               <button type='submit' value="/api/refreshMacroData">Refresh Macro Data</button>
             </form>
