@@ -318,6 +318,7 @@ export class Inputs extends React.Component {
               </select>
               <select className="quantity" index="0" name="state" value={this.state.taxSettingsToUpdate[0].state || ""} onChange={(event) => this.updateState(event, 'taxSettingsToUpdate')}>
                 <option value="CA">CA</option>
+                <option value="NY">NY</option>
               </select>
             </form>
           }
