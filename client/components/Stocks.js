@@ -12,7 +12,7 @@ export class Stocks extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedStock: 'FB',
+      selectedStock: 'TOTAL',
       messages: []
     };
     this.setStock = this.setStock.bind(this);

@@ -160,16 +160,22 @@ const getMacroData = async (year) => {
 }
 
 // get Stock history from the database
-const getStockHistory = async () => {
+const getStockHistory = async (user_id) => {
   try {
     const res = await db.query(`
       SELECT ticker, date, price 
       FROM stock_history 
       ORDER BY ticker, date ASC
     `); 
-    const rows = res.rows;
+    const res2 = await db.query(`
+      SELECT ticker, date, price 
+      FROM portfolio_summary
+      WHERE user_id = '${user_id}'
+      ORDER BY ticker, date ASC
+    `); 
+    const rows = [...res.rows,...res2.rows];
     // console.log(chalk.green('getStockHistory ==> ', JSON.stringify(rows[0])));
-    
+        
     // format each series_id set of data in the Chart JS object format
     let seriesDataSet = {  };
     let uniqueTickerArray = [];

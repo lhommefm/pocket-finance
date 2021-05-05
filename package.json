@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack",
     "start": "node server/startServer.js",
-    "start-dev": "webpack -w & nodemon server/startServer.js"
+    "start-dev": "nodemon server/startServer.js"
   },
   "author": "",
   "license": "ISC",

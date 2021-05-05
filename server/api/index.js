@@ -57,7 +57,7 @@ router.get('/getTaxData', async function (req, res, next) {
 
 // get the stock history from the database
 router.get('/getStockHistory', async function (req, res, next) {
-    const result = await getStockHistory();
+    const result = await getStockHistory(req.user?req.user.user_id:1);
     res.send(result);
 });
 
