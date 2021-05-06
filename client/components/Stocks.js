@@ -55,6 +55,9 @@ export class Stocks extends React.Component {
             <form onSubmit={this.handleSubmit} className='refreshButton'>
               <button type='submit' value="/api/refreshStockData">Refresh Stock Data</button>
             </form>
+            <form onSubmit={this.handleSubmit} className='refreshButton'>
+              <button type='submit' value="/api/refreshStockDetail">Refresh Stock Detail</button>
+            </form>
             {this.state.messages.map( (message, index) => { return (
               <p key={index}>{message}</p>
             )})} 
