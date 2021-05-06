@@ -4,7 +4,7 @@ const {
     getAssetAllocation, getMacroData, getStockHistory 
 } = require('../db/getDatabase')
 const { getBudgetAssumptions, getAssetsAssumptions, getTaxAssumptions } = require('../db/getAssumptions')
-const { refreshStocks } = require('../db/refreshStocks')
+const { refreshStocks, refreshStockDetail } = require('../db/refreshStocks')
 const { refreshFred } = require('../db/refreshFred')
 const { refreshQuandl } = require('../db/refreshQuandl')
 const chalk = require('chalk')
@@ -16,15 +16,21 @@ router.use('/update', require('./updateDB'))
 
 // refresh stock price history in the database for relevant stocks
 router.get('/refreshStockData', async function (req, res, next) {
-    const result = await refreshStocks(req.user.user_id);
-    console.log ('refresh stock price result ==>', JSON.stringify(result));
+    const result = await refreshStocks();
+    // console.log ('refresh stock price result ==>', JSON.stringify(result));
+    res.send({number: result});
+});
+
+// get the stock detail from the database
+router.get('/refreshStockDetail', async function (req, res, next) {
+    const result = await refreshStockDetail();
     res.send({number: result});
 });
 
 // get the latest Fred & Quandl economic numbers from the API
 router.get('/refreshMacroData', async function (req, res, next) {
     const result = await Promise.all([refreshFred(),refreshQuandl()])
-    console.log(chalk.yellow('refreshMacro Fred result ==>', JSON.stringify(result[0]),'Quandl result ==>', JSON.stringify(result[1]),));
+    // console.log(chalk.yellow('refreshMacro Fred result ==>', JSON.stringify(result[0]),'Quandl result ==>', JSON.stringify(result[1]),));
     res.send(result);
 });
 

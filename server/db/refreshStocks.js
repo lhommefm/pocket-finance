@@ -3,15 +3,23 @@ const { db } = require('./index')
 const axios = require('axios');
 
 // refresh stock data in the database
-const refreshStocks = async (user_id) => {
-    const stockList = await getTicker(user_id);
+const refreshStocks = async () => {
+    const stockList = await getTicker();
     const stockData = await getStockData(stockList);
     const result = await addStockDataDatabase(stockData);
     return result.rowCount
 }
 
+// refresh stock detail in the database
+const refreshStockDetail = async () => {
+  const stockList = await getTicker();
+  const stockDetail = await getStockDetail(stockList);
+  const result = await addStockDetailDatabase(stockDetail);
+  return result.rowCount
+}
+
 // get unique ticker list from the database
-const getTicker = async (user_id) => {
+const getTicker = async () => {
   try {
     const res = await db.query(`
       SELECT ticker
@@ -74,6 +82,7 @@ const getStockData = async function (stocks) {
   }
 
   console.log(chalk.yellow('missing tickers to process ==>', JSON.stringify(missingTickers)))
+  // use AlphaVantage to pull stock data for missing tickers that Marketstack doesn't cover
   for (let i = 0; i < missingTickers.length; i++) {
     const alphaURL = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${missingTickers[i]}&apikey=${process.env.ALPHAVANTAGE_API_KEY}`
   
@@ -97,7 +106,7 @@ const getStockData = async function (stocks) {
   return stockDataString
 }
 
-// upload stock data to database
+// upload stock history data to database
 const addStockDataDatabase = async (stockDataString) => {
   try {
     const res = await db.query(`
@@ -112,5 +121,76 @@ const addStockDataDatabase = async (stockDataString) => {
   }    
 }
   
-module.exports = { refreshStocks }
+// get stock detail data from Marketstack and format for database
+const getStockDetail = async function (stocks) {
+  let stockDetailString = "";
+  const dateFormatter = (date) => {
+    let d = new Date(date*1000)
+    return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`
+  };
+  const nullFormatter = (value) => {
+    if (value) {return `'${value}'`}
+    else {return `NULL`}
+  }
+  for (let i = 0; i<stocks.length; i++) {
+    try {
+      const options = {
+        method: 'GET',
+        url: 'https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-analysis',
+        params: {symbol: `${stocks[i].ticker}`, region: 'US'},
+        headers: {
+          'x-rapidapi-key': `${process.env.RAPIDAPI_KEY}`,
+          'x-rapidapi-host': `${process.env.RAPIDAPI_HOST}`
+        }
+      }
+      console.log(chalk.yellow('request ==>', JSON.stringify(options)));
+      const stockDetail = await axios.request(options);
+      if (!!stockDetail.data.defaultKeyStatistics) {
+        stockDetailString += `(
+          '${stockDetail.data.quoteType.symbol}',
+          '${stockDetail.data.quoteType.shortName}',
+          ${nullFormatter(stockDetail.data.defaultKeyStatistics.yield.raw)},
+          ${nullFormatter(stockDetail.data.defaultKeyStatistics.forwardPE.raw)},
+          ${nullFormatter(stockDetail.data.topHoldings.equityHoldings.priceToEarnings.raw)},
+          ${nullFormatter(stockDetail.data.topHoldings.equityHoldings.priceToBook.raw)},
+          ${nullFormatter(stockDetail.data.fundPerformance.riskOverviewStatistics.riskStatistics[0].beta.raw)},
+          '${dateFormatter(stockDetail.data.fundPerformance.performanceOverview.asOfDate.raw)}'
+        ),` 
+      } else {
+        stockDetailString += `(
+          '${stockDetail.data.quoteType.symbol}',
+          '${stockDetail.data.quoteType.shortName}',
+          ${nullFormatter(stockDetail.data.summaryDetail.yield.raw)},
+          ${nullFormatter(stockDetail.data.summaryDetail.forwardPE.raw)},
+          ${nullFormatter(stockDetail.data.summaryDetail.trailingPE.raw)},
+          ${nullFormatter(false)},
+          ${nullFormatter(stockDetail.data.summaryDetail.beta.raw)},
+          '${dateFormatter(stockDetail.data.price.regularMarketTime)}'
+        ),` 
+      }
+    } catch (error) {
+      console.log(chalk.red('axios Yahoo Rapid API stock detail error ==>', error));
+    }
+  }
+  stockDetailString = stockDetailString.slice(0,stockDetailString.length-1);
+  console.log(chalk.yellow('stock detail string ==>', stockDetailString)); 
+  return stockDetailString  
+}
+
+// insert stock detail data to database
+const addStockDetailDatabase = async (stockDetailString) => {
+  try {
+    const res = await db.query(`
+    INSERT INTO stock_detail_data (ticker, short_name, yield, forward_pe, price_earnings, price_book, beta, date) 
+    VALUES ${stockDetailString}
+    ON CONFLICT (ticker, date) DO NOTHING
+     `); 
+    console.log(chalk.blue('addStockDataDatabase ==> ', JSON.stringify(res)));
+    return(res);
+  } catch (error) {
+    console.log(chalk.red('addStockDataDatabase error ==>', error));
+  }    
+}
+
+module.exports = { refreshStocks, refreshStockDetail }
 
