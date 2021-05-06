@@ -6,6 +6,7 @@ import Axios from 'axios'
 import { getAssetAllocation } from "../store/getAssetAllocation";
 import { getStockAssets } from '../store/getStockAssets';
 import { getStockHistory } from "../store/getStocks";
+import { getStockDetail } from "../store/getStockDetail";
 import { ChartCard } from './MacroCharts';
 
 export class Stocks extends React.Component {
@@ -22,6 +23,7 @@ export class Stocks extends React.Component {
     this.props.stockAssets();
     this.props.assetAllocation();
     this.props.stockHistory();
+    this.props.stockDetail();
   }
   
   async handleSubmit(event) {
@@ -166,7 +168,49 @@ export class Stocks extends React.Component {
             <ChartCard chart_group={this.props.stocks[this.state.selectedStock]} />          
         </div>
       </div>
-      
+
+{/* Overall Stock Detail */}
+      <div className="card stock">
+        <div className="card-header stock-header">Stocks Details</div>
+        <table>
+          <thead>
+              <tr>
+                  <td className="sixty">Ticker</td>
+                  <td className="hundred-fifty">Name</td>
+                  <td className="numbers">Yield</td>
+                  <td className="numbers">PE</td>
+                  <td className="numbers">P/B</td>
+                  <td className="numbers">Beta</td>
+              </tr>
+          </thead>
+          <tbody>
+            {this.props.stockDetailData.map( (stockDetail, index) => { return (
+              <tr key = {index}>
+                <td className="sixty">{stockDetail.ticker}</td>
+                <td className="hundred-fifty">{stockDetail.short_name}</td>
+                <td>{new Intl.NumberFormat("en-US", { 
+                  style: "percent", 
+                  minimumFractionDigits: 1 
+                }).format(stockDetail.yield)}</td>
+                <td className="numbers">{new Intl.NumberFormat("en-US", { 
+                  style: "decimal", 
+                  maximumFractionDigits: 0 
+                }).format(stockDetail.price_earnings)}</td>
+                <td className="numbers">{new Intl.NumberFormat("en-US", { 
+                  style: "decimal", 
+                  maximumFractionDigits: 1 
+                }).format(stockDetail.price_book)}</td>
+                <td className="numbers">{new Intl.NumberFormat("en-US", { 
+                  style: "decimal", 
+                  maximumFractionDigits: 1 
+                }).format(stockDetail.beta)}</td>
+              </tr> 
+            )})}
+          </tbody>
+        </table>
+      </div>
+
+
      </div>
     </div>
     )};
@@ -180,6 +224,7 @@ const mapState = (state) => {
     stockTable: state.stockTable,
     assetTable: state.assetTable,
     stocks: state.stocks,
+    stockDetailData: state.stockDetail,
     loggedIn: state.status
   };
 };
@@ -188,7 +233,8 @@ const mapDispatch = (dispatch) => {
   return {
     stockAssets: () => dispatch(getStockAssets()),
     assetAllocation: () => dispatch(getAssetAllocation()),
-    stockHistory: () => dispatch(getStockHistory())
+    stockHistory: () => dispatch(getStockHistory()),
+    stockDetail: () => dispatch(getStockDetail())
   };
 };
 

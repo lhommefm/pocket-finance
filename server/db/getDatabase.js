@@ -82,6 +82,21 @@ const getTaxData = async (user_id) => {
   }
 }
 
+// get stock detail information
+const getStockDetail = async () => {
+  try {
+    const res = await db.query(`
+      SELECT ticker, short_name, yield, price_earnings, price_book, beta
+      FROM stock_detail_data
+      ORDER BY ticker
+    `); 
+  //   console.log(chalk.blue('getStockDetail ==> ', JSON.stringify(res.rows)));  
+    return(res.rows)
+  } catch (error) {
+    console.log(chalk.red('getStockDetail error ==>', error));
+  }
+}
+
 // get Macro data from the database
 const getMacroData = async (year) => {
   try {
@@ -216,4 +231,4 @@ const getStockHistory = async (user_id) => {
   }    
 }
 
-module.exports = { getBudget, getAssets, getStockAssets, getTaxData, getAssetAllocation, getMacroData, getStockHistory }
+module.exports = { getBudget, getAssets, getStockAssets, getTaxData, getAssetAllocation, getMacroData, getStockHistory, getStockDetail }

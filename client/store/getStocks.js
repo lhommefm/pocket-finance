@@ -7,7 +7,7 @@ export const getStockHistory = () => {
       try {
         const stocks = await Axios.get(`/api/getStockHistory`);
         // console.log('fetchStockHistory ==>',JSON.stringify(macro.data));
-        dispatch(updateMacro(stocks.data));
+        dispatch(updateStocks(stocks.data));
       } catch (err) {
         console.log('Error in fetching stock history from API')
       }
@@ -16,14 +16,14 @@ export const getStockHistory = () => {
 };
 
 // action creator to update Redux store with budget
-export const updateMacro = (stocks) => { 
+export const updateStocks = (stocks) => { 
   return {
     type: "updateStocks",
     stocks
   } 
 }
 
-// update state for taxes
+// update state for stock detail
 export function stocksReducer (stocks = {}, action) {
   switch (action.type) {
     case "updateStocks": return {...action.stocks}

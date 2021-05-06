@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { 
-    getBudget, getAssets, getStockAssets, getTaxData, 
+    getBudget, getAssets, getStockAssets, getTaxData, getStockDetail,
     getAssetAllocation, getMacroData, getStockHistory 
 } = require('../db/getDatabase')
 const { getBudgetAssumptions, getAssetsAssumptions, getTaxAssumptions } = require('../db/getAssumptions')
@@ -52,6 +52,12 @@ router.get('/getAssetAllocation', async function (req, res, next) {
 // get the stock assets with latest stock price
 router.get('/getStockAssets', async function (req, res, next) {
     const result = await getStockAssets(req.user?req.user.user_id:1);
+    res.send(result);
+});
+
+// get the stock detail
+router.get('/getStockDetail', async function (req, res, next) {
+    const result = await getStockDetail();
     res.send(result);
 });
 
