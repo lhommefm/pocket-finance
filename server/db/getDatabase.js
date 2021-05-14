@@ -87,7 +87,7 @@ const getStockDetail = async () => {
   try {
     const res = await db.query(`
       SELECT ticker, short_name, yield, price_earnings, price_book, beta
-      FROM stock_detail_data
+      FROM stock_latest_detail
       ORDER BY ticker
     `); 
   //   console.log(chalk.blue('getStockDetail ==> ', JSON.stringify(res.rows)));  
