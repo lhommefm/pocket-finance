@@ -19,11 +19,11 @@ export class Stocks extends React.Component {
     this.setStock = this.setStock.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  componentDidMount() {
-    this.props.stockAssets();
-    this.props.assetAllocation();
-    this.props.stockHistory();
-    this.props.stockDetail();
+  async componentDidMount() {
+    await this.props.stockAssets();
+    await this.props.assetAllocation();
+    await this.props.stockHistory();
+    await this.props.stockDetail();
   }
   
   async handleSubmit(event) {
