@@ -19,14 +19,14 @@ export class Macro extends React.Component {
       labor: [9,10],
       prices: [15,16,27],
       inflation: [12,13,20],
-      stocks: [2,3,28]
+      stocks: [3,28]
     };
     this.setYear = this.setYear.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
-    this.props.getMacro(this.state.year);
+  async componentDidMount() {
+    await this.props.getMacro(this.state.year);
   }
 
   async handleSubmit(event) {
