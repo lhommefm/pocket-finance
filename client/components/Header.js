@@ -23,8 +23,9 @@ export class Header extends React.Component {
   }
 
   async handleLogout() {
-  await Axios.delete('/authentication/logout')
-  this.props.checkStatus()
+  await Axios.delete('/authentication/logout');
+  this.props.checkStatus();
+  location.reload()
   }
 
   render() {
