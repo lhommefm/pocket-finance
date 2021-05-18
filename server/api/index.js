@@ -57,7 +57,7 @@ router.get('/getStockAssets', async function (req, res, next) {
 
 // get the stock detail
 router.get('/getStockDetail', async function (req, res, next) {
-    const result = await getStockDetail();
+    const result = await getStockDetail(req.user?req.user.user_id:1);
     res.send(result);
 });
 

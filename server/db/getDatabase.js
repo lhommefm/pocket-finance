@@ -83,14 +83,12 @@ const getTaxData = async (user_id) => {
 }
 
 // get stock detail information
-const getStockDetail = async () => {
+const getStockDetail = async (user_id) => {
   try {
     const res = await db.query(`
-      SELECT ticker, short_name, yield, price_earnings, price_book, beta
-      FROM stock_latest_detail
-      ORDER BY ticker
+      SELECT * FROM get_stock_detail('${user_id}')
     `); 
-  //   console.log(chalk.blue('getStockDetail ==> ', JSON.stringify(res.rows)));  
+    // console.log(chalk.blue('getStockDetail ==> ', JSON.stringify(res.rows)));  
     return(res.rows)
   } catch (error) {
     console.log(chalk.red('getStockDetail error ==>', error));
