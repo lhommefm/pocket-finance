@@ -17,9 +17,9 @@ export class Macro extends React.Component {
       governmentFinancials: [17,18,19,21],
       macroeconomic: [5,6,7,8],
       labor: [9,10],
-      prices: [15,16],
+      prices: [15,16,27],
       inflation: [12,13,20],
-      stocks: [3,28]
+      stocks: [2,3,28]
     };
     this.setYear = this.setYear.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -29,22 +29,22 @@ export class Macro extends React.Component {
     await this.props.getMacro(this.state.year);
   }
 
-  async handleSubmit(event) {
-    event.preventDefault()
-    const response = await Axios.get(event.target[0].value)
-    this.setState({
-      messages: [
-        ...this.state.messages,
-        `Updated ${response.data[0]} Fred entries`,
-        `Updated ${response.data[1]} Quandl entries`
-      ]
-    }); 
-    setTimeout( () => {
-      this.setState({
-        messages: []
-      });
-    }, 5000);
-  }
+  // async handleSubmit(event) {
+  //   event.preventDefault()
+  //   const response = await Axios.get(event.target[0].value)
+  //   this.setState({
+  //     messages: [
+  //       ...this.state.messages,
+  //       `Updated ${response.data[0]} Fred entries`,
+  //       `Updated ${response.data[1]} Quandl entries`
+  //     ]
+  //   }); 
+  //   setTimeout( () => {
+  //     this.setState({
+  //       messages: []
+  //     });
+  //   }, 5000);
+  // }
 
   setYear (event) {
     this.setState( {year: event.target.value} );
@@ -56,14 +56,14 @@ export class Macro extends React.Component {
     if (this.props.macro[1]) {
       return (
         <div className="stock-vertical">
-          <div className="update-button">
+          {/* <div className="update-button">
             <form onSubmit={this.handleSubmit} className='refreshButton'>
               <button type='submit' value="/api/refreshMacroData">Refresh Macro Data</button>
             </form>
             {this.state.messages.map( (message, index) => { return (
               <p key={index}>{message}</p>
             )})}  
-          </div>
+          </div> */}
           <div className="select">
             <span>Select a start year: 
               <select value={this.state.year} onChange={this.setYear}>
