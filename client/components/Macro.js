@@ -22,7 +22,7 @@ export class Macro extends React.Component {
       stocks: [2,3,28]
     };
     this.setYear = this.setYear.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this);
+    // this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   async componentDidMount() {
