@@ -17,7 +17,7 @@ export class Macro extends React.Component {
       governmentFinancials: [17,18,19,21],
       macroeconomic: [5,6,7,8],
       labor: [9,10],
-      prices: [15,16,27],
+      prices: [15,16],
       inflation: [12,13,20],
       stocks: [3,28]
     };
