@@ -193,8 +193,8 @@ export class Stocks extends React.Component {
                 <td className="hundred-fifty">{stockDetail.short_name}</td>
                 <td>{new Intl.NumberFormat("en-US", { 
                   style: "percent", 
-                  minimumFractionDigits: 1 
-                }).format(stockDetail.yield)}</td>
+                  maximumFractionDigits: 1 
+                }).format(stockDetail.yield/100)}</td>
                 <td className="numbers">{new Intl.NumberFormat("en-US", { 
                   style: "decimal", 
                   maximumFractionDigits: 0 
