@@ -39,7 +39,7 @@ const getAssetsAssumptions = async (user_id) => {
 const getTaxAssumptions = async (user_id) => {
   try {
     const res = await db.query(`
-      SELECT filing_status, state
+      SELECT filing_status, state, city
       FROM tax_settings
       WHERE user_id = '${user_id}'
     `); 

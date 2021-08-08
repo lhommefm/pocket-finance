@@ -307,7 +307,7 @@ export class Inputs extends React.Component {
         <div className="card-header input-header">Update Tax Settings</div>  
         <div className="row table-names">
           <div className="hundred-twentyfive">Marital Status</div>
-          <div className="quantity">State</div>
+          <div className="sixty">State</div>
           <div className="sixty">City</div>
         </div>
         <div className="row">
@@ -317,7 +317,7 @@ export class Inputs extends React.Component {
                 <option value="Single">Single</option>
                 <option value="Married">Married</option>
               </select>
-              <select className="quantity" index="0" name="state" value={this.state.taxSettingsToUpdate[0].state || ""} onChange={(event) => this.updateState(event, 'taxSettingsToUpdate')}>
+              <select className="sixty" index="0" name="state" value={this.state.taxSettingsToUpdate[0].state || ""} onChange={(event) => this.updateState(event, 'taxSettingsToUpdate')}>
                 <option value="CA">CA</option>
                 <option value="NY">NY</option>
                 <option value="NJ">NJ</option>
