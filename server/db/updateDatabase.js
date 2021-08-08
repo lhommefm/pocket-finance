@@ -78,6 +78,7 @@ const updateTaxSettings = async (data, user_id) => {
         SET 
           filing_status = '${data[i].filing_status}', 
           state = '${data[i].state}'
+          city = '${data[i].city}'
         WHERE user_id = '${user_id}' 
       `); 
       return('Success');

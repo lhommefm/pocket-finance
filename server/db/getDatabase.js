@@ -71,7 +71,7 @@ const getStockAssets = async (user_id) => {
 const getTaxData = async (user_id) => {
   try {
     const res = await db.query(`
-      SELECT "Medicare", "Social Security", "Federal Taxes", "State Taxes"
+      SELECT "Medicare", "Social Security", "Federal Taxes", "State Taxes", "City Taxes"
       FROM tax_user_results
       WHERE user_id = '${user_id}'
     `); 
