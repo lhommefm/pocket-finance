@@ -308,6 +308,7 @@ export class Inputs extends React.Component {
         <div className="row table-names">
           <div className="hundred-twentyfive">Marital Status</div>
           <div className="quantity">State</div>
+          <div className="quantity">City</div>
         </div>
         <div className="row">
           {!this.state.taxSettingsToUpdate[0] ? "Data loading" : 
@@ -319,10 +320,15 @@ export class Inputs extends React.Component {
               <select className="quantity" index="0" name="state" value={this.state.taxSettingsToUpdate[0].state || ""} onChange={(event) => this.updateState(event, 'taxSettingsToUpdate')}>
                 <option value="CA">CA</option>
                 <option value="NY">NY</option>
+                <option value="NJ">NJ</option>
+              </select>
+              <select className="quantity" index="0" name="city" value={this.state.taxSettingsToUpdate[0].state || ""} onChange={(event) => this.updateState(event, 'taxSettingsToUpdate')}>
+                <option value="None">N/A</option>
+                <option value="NYC">NYC</option>
               </select>
             </form>
           }
-          <input className="button-tax" type="submit" onClick={() => this.updateDatabase(
+          <input className="button-input" type="submit" value="Update Settings" onClick={() => this.updateDatabase(
           this.props.inputs[2],
           this.state.taxSettingsToUpdate,
           '/api/update/updateTaxSettings',
