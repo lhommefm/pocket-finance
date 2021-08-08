@@ -308,12 +308,12 @@ export class Inputs extends React.Component {
         <div className="row table-names">
           <div className="hundred">Marital Status</div>
           <div className="quantity">State</div>
-          <div className="quantity">City</div>
+          <div className="sixty">City</div>
         </div>
         <div className="row">
           {!this.state.taxSettingsToUpdate[0] ? "Data loading" : 
             <form>
-              <select className="hundred-fifty" index="0" name="filing_status" value={this.state.taxSettingsToUpdate[0].filing_status} onChange={(event) => this.updateState(event, 'taxSettingsToUpdate')}>
+              <select className="hundred" index="0" name="filing_status" value={this.state.taxSettingsToUpdate[0].filing_status} onChange={(event) => this.updateState(event, 'taxSettingsToUpdate')}>
                 <option value="Single">Single</option>
                 <option value="Married">Married</option>
               </select>
@@ -322,7 +322,7 @@ export class Inputs extends React.Component {
                 <option value="NY">NY</option>
                 <option value="NJ">NJ</option>
               </select>
-              <select className="quantity" index="0" name="city" value={this.state.taxSettingsToUpdate[0].state || ""} onChange={(event) => this.updateState(event, 'taxSettingsToUpdate')}>
+              <select className="sixty" index="0" name="city" value={this.state.taxSettingsToUpdate[0].state || ""} onChange={(event) => this.updateState(event, 'taxSettingsToUpdate')}>
                 <option value="None">None</option>
                 <option value="NYC">NYC</option>
               </select>
