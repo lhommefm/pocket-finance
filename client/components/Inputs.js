@@ -196,6 +196,7 @@ export class Inputs extends React.Component {
               <div className="sixty">Budget</div>
               <div className="hundred-twentyfive">Type</div>
               <div className="sixty">Ticker</div>
+              <div className="sixty">Person</div>
             </div>
             {this.state.budgetToUpdate.map( (budgetEntry, index) => { return (
               <div className="row" key={index}>
@@ -210,6 +211,7 @@ export class Inputs extends React.Component {
                     <option value="other">Other</option>
                   </select>
                   <input className="sixty" index={index} type="text" name="ticker" value={budgetEntry.ticker || ''} onChange={(event) => this.updateState(event, 'budgetToUpdate')} />
+                  <input className="sixty" index={index} type="text" name="person" value={budgetEntry.person || ''} onChange={(event) => this.updateState(event, 'budgetToUpdate')} />
                   <input type="submit" value="X" onClick={(event) => this.deleteItem(budgetEntry.id, 'budget_assumptions', event, 'budget')} />
                 </form>
               </div>

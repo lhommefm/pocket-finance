@@ -35,7 +35,8 @@ const updateBudget = async (data, user_id) => {
           activity = '${data[i].activity}', 
           budget = '${data[i].budget}', 
           item_type = '${data[i].item_type}',
-          ticker = ${!data[i].ticker ? null : `'${data[i].ticker}'`}
+          ticker = ${!data[i].ticker ? null : `'${data[i].ticker}'`},
+          person = ${!data[i].person ? null : `'${data[i].person}'`}
         WHERE id = '${data[i].id}' AND user_id = '${user_id}' 
       `); 
       return('Success');

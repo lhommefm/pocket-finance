@@ -5,7 +5,7 @@ const { db } = require('./index')
 const getBudget = async (user_id) => {
     try {
       const res = await db.query(`
-        SELECT activity, budget, item_type
+        SELECT activity, budget, item_type, person
         FROM income_expenses 
         WHERE user_id = '${user_id}'
       `); 

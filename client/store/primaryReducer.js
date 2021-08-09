@@ -1,6 +1,6 @@
 
 import { combineReducers } from 'redux';
-import { budgetReducer, assetReducer } from './getBudgetAssets';
+import { budgetReducer, peopleReducer, assetReducer } from './getBudgetAssets';
 import { stockTableReducer } from './getStockAssets';
 import { assetAllocationReducer } from './getAssetAllocation';
 import { taxesReducer } from './getTaxes';
@@ -13,6 +13,7 @@ import { statusReducer } from './getStatus';
 const primaryReducer = combineReducers({
   budget: budgetReducer,
   assets: assetReducer,
+  people: peopleReducer,
   stockTable: stockTableReducer,
   assetTable: assetAllocationReducer,
   taxes: taxesReducer,

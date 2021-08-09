@@ -5,7 +5,7 @@ const { db } = require('./index')
 const getBudgetAssumptions = async (user_id) => {
     try {
       const res = await db.query(`
-        SELECT id, activity, budget, item_type, ticker
+        SELECT id, activity, budget, item_type, ticker, person
         FROM budget_assumptions 
         WHERE user_id = '${user_id}'
         ORDER BY item_type, budget DESC, activity

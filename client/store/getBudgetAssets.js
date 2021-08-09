@@ -6,7 +6,15 @@ export const getBudgetAssets = () => {
     async function (dispatch) {
       try {
         const financials = await Axios.get('/api/budgetAssets');
+        let people = [];
+        for (let i = 0; i < financials.data[0].length; i++) {
+          let person = financials.data[0][i]['person']
+          if (person && !people.includes(person)) {
+              people.push(person)
+            }
+        };
         dispatch(updateBudget(financials.data[0]));
+        dispatch(updatePeople(people));
         dispatch(updateAssets(financials.data[1]));
       } catch (err) {
         console.log('Error in fetching budgetAssets from API')
@@ -20,6 +28,14 @@ export const updateBudget = (budget) => {
   return {
     type: "updateBudget",
     budget
+  } 
+}
+
+// action creator to update Redux store with people
+export const updatePeople = (people) => { 
+  return {
+    type: "updatePeople",
+    people
   } 
 }
 
@@ -38,6 +54,14 @@ export function budgetReducer (budget = [], action) {
       default: return budget
     }
   }
+
+// update state for budget
+export function peopleReducer (people = [], action) {
+  switch (action.type) {
+    case "updatePeople": return [...action.people]
+    default: return people
+  }
+}
 
 // update state for asset
 export function assetReducer (assets = [], action) {

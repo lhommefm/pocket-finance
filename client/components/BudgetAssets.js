@@ -36,28 +36,35 @@ export class BudgetAssets extends React.Component {
      <div className="flex">
 
 {/* Income Table */}
-      <div className="card budget">
-        <div className="card-header budget-header">{"Income & Savings"}</div>
-        <table>
-          <thead>
-              <tr>
-                  <td className="table-label">Income Type</td>
-                  <td className="numbers">Value</td>
-              </tr>
-          </thead>
+      <div className="budget">
+        {this.props.people.map( (person, idx) => { return (
+          <div className="income card" key={idx}>
+            <div className="card-header budget-header">{"Income & Savings: "+ person}</div>
+            <table>
+              <thead>
+                  <tr>
+                      <td className="table-label">Income Type</td>
+                      <td className="numbers">Value</td>
+                  </tr>
+              </thead>
+              <tbody>
+                {this.props.budget.map( (budgetEntry, idx) => {
+                  if (budgetEntry.item_type === 'income cash' && budgetEntry.person == person) { return (
+                      <tr key = {idx}>
+                        <td>{budgetEntry.activity}</td>
+                        <td className="numbers">{new Intl.NumberFormat("en-US", { 
+                          style: "currency", 
+                          currency: "USD", 
+                          maximumFractionDigits: 0 
+                        }).format(budgetEntry.budget)}</td>
+                      </tr> 
+                  )};
+                })}
+              </tbody>
+            </table>
+          </div> )})}
+        <div className="card"><table>
           <tbody>
-            {this.props.budget.map( (budgetEntry) => {
-              if (budgetEntry.item_type === 'income cash') { return (
-                  <tr key = {budgetEntry.activity}>
-                    <td>{budgetEntry.activity}</td>
-                    <td className="numbers">{new Intl.NumberFormat("en-US", { 
-                      style: "currency", 
-                      currency: "USD", 
-                      maximumFractionDigits: 0 
-                    }).format(budgetEntry.budget)}</td>
-                  </tr> 
-              )};
-            })}
             <tr className="total">
                 <td className="table-label">Total</td>
                 <td className="numbers">
@@ -79,10 +86,9 @@ export class BudgetAssets extends React.Component {
                       }).format(
                       this.netSavings() 
                     )}</td>
-            </tr>         
-          </tbody>
-        </table>
-     
+            </tr>
+          </tbody>         
+        </table></div>
       </div>
 
   {/* Income Taxes Table */}
@@ -133,9 +139,9 @@ export class BudgetAssets extends React.Component {
               </tr>
           </thead>
           <tbody>
-            {this.props.budget.map( (budgetEntry) => {
+            {this.props.budget.map( (budgetEntry, idx) => {
               if (budgetEntry.item_type === 'expense') { return (
-                  <tr key = {budgetEntry.activity}>
+                  <tr key = {idx}>
                     <td className="table-label">{budgetEntry.activity}</td>
                     <td className="numbers">{new Intl.NumberFormat("en-US", { 
                       style: "currency", 
@@ -224,6 +230,7 @@ export class BudgetAssets extends React.Component {
 const mapState = (state) => {
   return {
     budget: state.budget,
+    people: state.people,
     assets: state.assets,
     taxes: state.taxes,
   };

@@ -204,6 +204,10 @@ thead .numbers {
     border-collapse: collapse;
 }
 
+.income {
+    margin-bottom: 10px;
+}
+
 .numbers {
     text-align: right;
 }
